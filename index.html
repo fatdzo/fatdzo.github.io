@@ -1,13 +1,89 @@
 <html>
 <head>
+    <meta content="text/html;charset=utf-8" http-equiv="Content-Type">
+    <meta content="utf-8" http-equiv="encoding">
 	<title>
 	MarkoMarksDevelopment
 	</title>
-</head>
-<body>
-<h1>Welcome to MarkoMarksDevelopment! This website is underconstruction, please check in later</h1>
-<h2>and later</h2>
-    
+    <script type="text/javascript" src="Scripts/jquery-2.2.1.min.js"></script>
+    <link href="Content/bootstrap.min.css" rel="stylesheet" />
+    <link href="Content/base.css" rel="stylesheet" />
 
+    <script type="text/javascript" src="Scripts/bootstrap.min.js"></script>
+    <script type="text/javascript" src="Scripts/dragend.min.js"></script>
+</head>
+<body class="grad">
+
+    <div id="dragend-container" class="gradfiller">
+        <ul>
+            <li class="dragend-page">
+                <div class="container">
+                    <div class="jumbotron">
+                        <h1>Welcome to MarkoMarksDevelopment!</h1>
+                        <p>This website is still underconstruction, drop by later</p>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-12">
+                            Row
+                        </div>
+                    </div>
+                </div>
+            </li>
+            <li class="dragend-page">
+                <div class="container">
+                    <div class="jumbotron">
+                        <h1>Resume</h1>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-12">
+                            Row
+                        </div>
+                    </div>
+                </div>
+            </li>
+            <li class="dragend-page">
+                <div class="container">
+                    <div class="jumbotron">
+                        <h1>Apps</h1>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-12">
+                            Row
+                        </div>
+                    </div>
+                </div>
+            </li>
+            <li class="dragend-page">
+                <div class="container">
+                    <div class="jumbotron">
+                        <h1>Contact</h1>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-12">
+                            Row
+                        </div>
+                    </div>
+                </div>
+            </li>
+
+        </ul>
+    </div>
+
+
+    
+<script>
+    $(function () {
+        $('#dragend-container').dragend({
+            //preventDrag: true,
+            afterInitialize: function () {
+                this.container.style.visibility = "visible";
+            },
+            onSwipeEnd: function () {
+            }
+        });
+        console.log("ready!");
+    });
+
+</script>
 </body>
 </html>
