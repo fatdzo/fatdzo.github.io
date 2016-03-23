@@ -1,57 +1,76 @@
-﻿*{
+﻿/* Portrait */
+@media screen and (orientation:portrait) {  
+    #dragend-container {
+        height:100vh!important;
+    }
+    .dragend-page {
+        height:100vh!important;
+    }
+    .container {
+        height: 100vh!important;
+    }
+}
+/* Landscape */
+@media screen and (orientation:landscape) {
+
+    .container{
+        height:100vh!important;
+    }
+}
+
+*{
       padding: 0;
       margin: 0;
       border: 0;
-}
-html {
-    height:100%;
+      font-size:22px;
+      font-family:Arial;
 }
 body {
-    width: 100%;
-    height:100%;
-    padding:0;
-    margin:0;
-    font-size:20px;
-    background-color:#135970;
-    font-family: Arial;
-}
-
-.form-control::-webkit-input-placeholder { font-family: Arial; font-size:x-large; }
-.form-control:-moz-placeholder { font-family: Arial; font-size:x-large; }
-.form-control::-moz-placeholder { font-family: Arial; font-size:x-large; }
-.form-control:-ms-input-placeholder { font-family: Arial; font-size:x-large; }
-
-.dragend-page {
-    padding:0;
-    margin:0;
     
+    overflow:hidden; 
+    height:100%
 }
 
+p {
+    font-style:italic;
+}
 
-.jumbotron {
-    padding:0!important;
-    margin:0!important;
-    background-color:transparent!important;
+ul.mmul{ 
+    list-style-type: none 
+} 
+li.mmli:before { 
+    content: "- "; font-size: 36px; 
 }
 
 #dragend-container {
-      width: 100%;
-      height:100%;
-      visibility: hidden;
-      margin: 0 auto;
-      padding:0;
-      margin:0;   
+    position:relative;
+    display:block;
+      width: 100%;  
+      height:100vh;    
+      margin: 0 auto;  
+      z-index:2;
 }
 
 #dragend {
-    position: absolute;
-    bottom: 50px;
-    right: 50px;
-    padding: 18px;
     color: #fff;
     border-radius: 3px;
     width: 150px;
     font-size: 15px;
+}
+
+
+.dragend-page {
+    width:100%;
+    height:100vh;
+    padding:0;
+    margin:0;
+}
+
+.container {
+    width:100%; 
+    overflow-y:scroll; 
+    position:relative;
+    height: 100%;
 }
 
 .grad {
@@ -69,20 +88,7 @@ body {
 
 .gradfiller {
     background-image: url("../../Content/img/jg_background_pattern.png");
-    background-repeat: repeat;
-
-    width:100%;
-    min-height:1024px!important;
-    
-}
-
-.mmfooter {
-   bottom: 0;
-   position: absolute;
-   width: 100%;
-   text-align:center;
-   font-weight:bold;
-   font-size:xx-large!important;
+    background-repeat: repeat;   
 }
 
 .mmmiddle {
@@ -103,9 +109,34 @@ body {
    text-align:center;
 }
 
-.container {
+
+.mmheader {
     position:relative;
-    height:100%;
-    min-height:100vh!important;
-    overflow:hidden;
+    display:block;
+    padding-top:20px;
+    padding-bottom:20px;
+    top:0;
+    z-index:3;
+}
+
+.mmstrong {
+    font-weight:bold;
+}
+
+.mmcenter {
+    text-align:center;
+}
+
+/* Bootstrap */
+.jumbotron {
+    background-color:rgba(42, 76, 83, 0.5);
+}
+
+.btn {
+    width:150px;
+    margin-left:15px;
+    background-color:#6097a5 !important;
+    color: white;
+    font-weight:bold;
+    font-size:25px;
 }

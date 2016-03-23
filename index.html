@@ -2,120 +2,57 @@
 <head>
     <meta content="text/html;charset=utf-8" http-equiv="Content-Type">
     <meta content="utf-8" http-equiv="encoding">
+    <meta name="description" content="MarkoMarksDevelopment is the personal website of Marko Markovic">
+    <meta name="keywords" content="MarkoMarksDevelopment, Marko Markovic, Resume, Melody Generator, Anchorman, Anchorman Free, Android, Web developer " />
 	<title>
-	MarkoMarksDevelopment
+	    MarkoMarksDevelopment
 	</title>
     <script type="text/javascript" src="Scripts/jquery-2.2.1.min.js"></script>
     <link href="Content/bootstrap.min.css" rel="stylesheet" />
     <link href="Content/base.css" rel="stylesheet" />
 
+    <meta name="viewport" content="user-scalable=no">
+
     <script type="text/javascript" src="Scripts/bootstrap.min.js"></script>
     <script type="text/javascript" src="Scripts/dragend.min.js"></script>
 </head>
 <body class="grad">
+    <div class="mmheader gradfiller">
+        <div class="row">
+            <div class="btn-group-lg" role="group" aria-label="...">
+                <center>
+                    <button type="button" class="btn btn-default mmhome">Home</button>
+                    <button type="button" class="btn btn-default mmapps">Apps</button>
+                    <button type="button" class="btn btn-default mmresume">Resume</button>
+                    <button type="button" class="btn btn-default mmcontact">Contact</button>
+                </center>
+            </div>
+        </div>
+    </div>
 
-    <div id="dragend-container" class="gradfiller">
+    <div id="dragend-container">
         <ul>
-            <li class="dragend-page">
-                <div class="container">
-                    <div class="jumbotron">
-                        <center>
-                            <h1>Welcome to MarkoMarksDevelopment!</h1>
-                            <p>This website is still underconstruction, drop by later</p>
-                        </center>
-                    </div>
-                    <div class="row">
-                        <div class="col-lg-12">
-                            Row
-                        </div>
+            <li class="dragend-page grad">
+                <div class="gradfiller">
+                    <div id="landing-page">
                     </div>
                 </div>
             </li>
             <li class="dragend-page grad">
-                <div class="container gradfiller">
-                    <div class="jumbotron">
-                        <h1>Resume</h1>
-                    </div>
-                    <div class="row">
-                        <div class="col-lg-4">
-                            Programming languages
-                        </div>
-                        <div class="col-lg-8">
-                            <ul>
-                                <li>C#</li>
-                                <li>Java</li>
-                                <li>C++</li>
-                            </ul>
-                        </div>
-                    </div>
-
-                    <div class="row">
-                        <div class="col-lg-4">
-                            Front end
-                        </div>
-                        <div class="col-lg-8">
-                            <ul>
-                                <li>HTML</li>
-                                <li>CSS</li>
-                                <li>Bootstrap</li>
-                                <li>Javascript</li>
-                                <li>Knockout.js</li>
-                                <li>JQuery</li>
-                                <li>Socket.io</li>
-                                <li>CreateJS</li>
-                                <li>Dragend JS</li>
-                            </ul>
-                        </div>
-                    </div>
-
-
-                    <div class="row">
-                        <div class="col-lg-4">
-                            DataBases
-                        </div>
-                        <div class="col-lg-8">
-                            <ul>
-                                <li>SQL (MySql, MS SQL)</li>
-                                <li>RavenDB</li>
-                            </ul>
-                        </div>
-                    </div>
-
-                    <div class="row">
-                        <div class="col-lg-4">
-                            File Formats
-                        </div>
-                        <div class="col-lg-8">
-                            <ul>
-                                <li>XML</li>
-                                <li>MusicXML</li>
-                                <li>Midi</li>
-                            </ul>
-                        </div>
+                <div class="gradfiller">
+                    <div id="apps-page">
                     </div>
                 </div>
             </li>
-            <li class="dragend-page">
-                <div class="container">
-                    <div class="jumbotron">
-                        <h1>Apps</h1>
-                    </div>
-                    <div class="row">
-                        <div class="col-lg-12">
-                            Row
-                        </div>
+            <li class="dragend-page grad">
+                <div class="gradfiller">
+                    <div id="resume-page">
                     </div>
                 </div>
             </li>
-            <li class="dragend-page">
-                <div class="container">
-                    <div class="jumbotron">
-                        <h1>Contact</h1>
-                    </div>
-                    <div class="row">
-                        <div class="col-lg-12">
-                            Row
-                        </div>
+            <li class="dragend-page grad">
+                <div class="gradfiller">
+                    <div id="contact-page">
                     </div>
                 </div>
             </li>
@@ -124,19 +61,52 @@
     </div>
 
 
-    
 <script>
+    var LANDING_PAGE = 1;
+    var RESUME_PAGE = 3;
+    var APPS_PAGE = 2;
+    var CONTACT_PAGE = 4;
+
     $(function () {
         $('#dragend-container').dragend({
-            //preventDrag: true,
+            preventDrag: true,
             afterInitialize: function () {
                 this.container.style.visibility = "visible";
+                loadPartials();
             },
             onSwipeEnd: function () {
             }
         });
-        console.log("ready!");
+
+
+        $(".mmhome").click(function () {
+            gotopage(LANDING_PAGE);
+        });
+        $(".mmapps").click(function () {
+            gotopage(APPS_PAGE);
+        });
+        $(".mmresume").click(function () {
+            gotopage(RESUME_PAGE);
+        });
+        $(".mmcontact").click(function () {
+            gotopage(CONTACT_PAGE);
+        });
     });
+
+    function loadPartials()
+    {
+        $("#landing-page").load("Views/landingPage.html");
+        $("#resume-page").load("Views/resumePage.html");
+        $("#apps-page").load("Views/appsPage.html");
+        $("#contact-page").load("Views/contactPage.html");
+    }
+
+    function gotopage(page)
+    {
+        $("#dragend-container").dragend({
+            scrollToPage: page
+        });
+    }
 
 </script>
 </body>
