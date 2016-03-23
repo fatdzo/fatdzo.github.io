@@ -1,0 +1,5 @@
+User-agent: *
+Disallow: /Views/appsPage.html
+Disallow: /Views/contactPage.html
+Disallow: /Views/landingPage.html
+Disallow: /Views/resumePage.html
