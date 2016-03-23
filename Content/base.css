@@ -134,6 +134,7 @@ li.mmli:before {
 
 .mmcardcontainer {
     padding-top:50px;
+    padding-bottom:50px;
     max-width:600px;
 }
 
