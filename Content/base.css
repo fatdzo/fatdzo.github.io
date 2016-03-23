@@ -149,7 +149,35 @@ li.mmli:before {
     padding:10px;
 }
 
-img.mmcard {
+.mmcardemail {
+    border-radius:10px;
+    background-color:rgba(42, 76, 83, 0.5);
+    display:inline-block;
+    width:340px;
+    height:50px;
+    margin:10px;
+    margin-bottom:25px;
+    padding:10px;
+    cursor:pointer;
+}
+
+.mmcardemail:hover {
+    background-color:rgba(64, 96, 103, 0.5);
+}
+
+.mmcard a {
+    border:0;
+
+}
+
+.mmcardemail a:hover
+{
+  text-decoration:none;
+  font-style:normal;
+  color:#59acc3;
+}
+
+.mmcard img {
     width:150px;
     height:150px;
 }

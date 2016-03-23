@@ -67,7 +67,12 @@
     var APPS_PAGE = 2;
     var CONTACT_PAGE = 4;
 
+    var email;
+
     $(function () {
+
+        var ko = 'markomarksdev';
+        
         $('#dragend-container').dragend({
             preventDrag: true,
             afterInitialize: function () {
@@ -78,6 +83,8 @@
             }
         });
 
+        var ka = '@';
+        
 
         $(".mmhome").click(function () {
             gotopage(LANDING_PAGE);
@@ -91,6 +98,11 @@
         $(".mmcontact").click(function () {
             gotopage(CONTACT_PAGE);
         });
+
+        var cemu = 'gmail';
+        var ende = '.com';
+        email = ko + ka + cemu + ende;
+        
     });
 
     function loadPartials()
@@ -98,7 +110,14 @@
         $("#landing-page").load("Views/landingPage.html");
         $("#resume-page").load("Views/resumePage.html");
         $("#apps-page").load("Views/appsPage.html");
-        $("#contact-page").load("Views/contactPage.html");
+        $("#contact-page").load("Views/contactPage.html", function () {
+            $('#contact-email').html(email);
+            $('#contact-email').click(function (event) {
+                window.location = 'mailto:' + email;
+            });
+        });
+
+        
     }
 
     function gotopage(page)
