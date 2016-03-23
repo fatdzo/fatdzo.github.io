@@ -153,8 +153,8 @@ li.mmli:before {
     border-radius:10px;
     background-color:rgba(42, 76, 83, 0.5);
     display:inline-block;
-    width:340px;
-    height:50px;
+    width:400px;
+    height:65px;
     margin:10px;
     margin-bottom:25px;
     padding:10px;
@@ -167,7 +167,10 @@ li.mmli:before {
 
 .mmcard a {
     border:0;
+}
 
+.mmcardemail a {
+    font-size:30px;
 }
 
 .mmcardemail a:hover
