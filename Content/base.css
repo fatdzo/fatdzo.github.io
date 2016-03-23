@@ -35,6 +35,10 @@ p {
     font-style:italic;
 }
 
+a {
+    color:#59acc3;
+}
+
 ul.mmul{ 
     list-style-type: none 
 } 
@@ -121,6 +125,7 @@ li.mmli:before {
 
 .mmstrong {
     font-weight:bold;
+    font-style:normal;
 }
 
 .mmcenter {
