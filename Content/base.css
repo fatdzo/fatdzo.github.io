@@ -132,6 +132,21 @@ li.mmli:before {
     text-align:center;
 }
 
+.mmcard {
+    border-radius:10px;
+    background-color:rgba(42, 76, 83, 0.5);
+    display:inline-block;
+    width:120px;
+    height:120px;
+    margin:5px;
+    padding:10px;
+}
+
+img.mmcard {
+    width:100px;
+    height:100px;
+}
+
 /* Bootstrap */
 .jumbotron {
     background-color:rgba(42, 76, 83, 0.5);
