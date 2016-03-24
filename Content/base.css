@@ -132,6 +132,26 @@ li.mmli:before {
     text-align:center;
 }
 
+.col-lg-6 {
+    padding-top:10px;
+    padding-bottom:10px;
+}
+
+.mmappblock {
+    display:table-cell;
+    vertical-align: middle;
+    border-radius:20px;
+    background-color:rgba(42, 76, 83, 0.5);
+    height:600px;
+    padding:10px;
+    padding-left:30px;
+    padding-right:30px;
+}
+
+.mmappblockclear {
+    background-color:transparent;
+}
+
 .mmcardcontainer {
     padding-top:20px;
     margin-bottom:80px;
