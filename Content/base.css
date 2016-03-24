@@ -23,7 +23,7 @@
       margin: 0;
       border: 0;
       font-size:25px;
-      font-family:Arial;
+      font-family:"Trebuchet MS", Helvetica, sans-serif;
 }
 body {
     
@@ -33,17 +33,26 @@ body {
 
 p {
     font-style:italic;
+    text-align:justify;
+    font-size:25px!important;
+    font-family:"Trebuchet MS", Helvetica, sans-serif;
+    text-indent: 50px;
 }
 
 a {
     color:#59acc3;
 }
 
+h1 {
+    font-family: Impact, Haettenschweiler, 'Franklin Gothic Bold', Charcoal, 'Helvetica Inserat', 'Bitstream Vera Sans Bold', 'Arial Black', 'sans serif'!important;
+    font-weight:normal!important;
+}
+
 ul.mmul{ 
     list-style-type: none 
 } 
 li.mmli:before { 
-    content: "- "; font-size: 36px; 
+    content: "-"; font-size: 36px; 
 }
 
 #dragend-container {
@@ -68,13 +77,6 @@ li.mmli:before {
     height:100vh;
     padding:0;
     margin:0;
-}
-
-.container {
-    width:100%; 
-    overflow-y:scroll; 
-    position:relative;
-    height: 100%;
 }
 
 .grad {
@@ -130,11 +132,6 @@ li.mmli:before {
 
 .mmcenter {
     text-align:center;
-}
-
-.col-lg-6 {
-    padding-top:10px;
-    padding-bottom:10px;
 }
 
 .mmappblock {
@@ -217,4 +214,16 @@ li.mmli:before {
     color: white;
     font-weight:bold;
     font-size:25px;
+}
+
+.col-lg-6 {
+    padding-top:10px;
+    padding-bottom:10px;
+}
+
+.container {
+    width:100%; 
+    overflow-y:scroll; 
+    position:relative;
+    height: 100%;
 }
