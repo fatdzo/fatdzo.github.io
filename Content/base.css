@@ -143,12 +143,13 @@ li.mmli:before {
     background-color:rgba(42, 76, 83, 0.5);
     height:600px;
     padding:10px;
+    padding-top:15px;
     padding-left:30px;
     padding-right:30px;
 }
 
 .mmsmallappblock {
-    height:400px;
+    height:420px;
 }
 
 .mmappblockclear {
@@ -223,6 +224,11 @@ li.mmli:before {
 }
 
 .col-lg-6 {
+    padding-top:10px;
+    padding-bottom:10px;
+}
+
+.col-lg-12 {
     padding-top:10px;
     padding-bottom:10px;
 }
