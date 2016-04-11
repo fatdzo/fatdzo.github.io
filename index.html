@@ -3,7 +3,7 @@
     <meta content="text/html;charset=utf-8" http-equiv="Content-Type">
     <meta content="utf-8" http-equiv="encoding">
     <meta name="description" content="MarkoMarksDevelopment is the personal website of Marko Markovic">
-    <meta name="keywords" content="MarkoMarksDevelopment, Marko Markovic, Resume, Melody Generator, Anchorman, Anchorman Free, Android, Web developer " />
+    <meta name="keywords" content="MarkoMarksDevelopment, Marko Markovic, Resume, Melody Generator, Anchorman, Anchorman Free, Android, Web developer, Under The Blue, Orlando, Florida " />
 	<title>
 	    MarkoMarksDevelopment
 	</title>
@@ -24,6 +24,7 @@
                     <button type="button" class="btn btn-default mmhome">Home</button>
                     <button type="button" class="btn btn-default mmapps">Apps</button>
                     <button type="button" class="btn btn-default mmresume">Resume</button>
+                    <button type="button" class="btn btn-default mmmusic">Music</button>
                     <button type="button" class="btn btn-default mmcontact">Contact</button>
                 </center>
             </div>
@@ -52,6 +53,12 @@
             </li>
             <li class="dragend-page grad">
                 <div class="gradfiller">
+                    <div id="music-page">
+                    </div>
+                </div>
+            </li>
+            <li class="dragend-page grad">
+                <div class="gradfiller">
                     <div id="contact-page">
                     </div>
                 </div>
@@ -63,9 +70,10 @@
 
 <script>
     var LANDING_PAGE = 1;
-    var RESUME_PAGE = 3;
     var APPS_PAGE = 2;
-    var CONTACT_PAGE = 4;
+    var RESUME_PAGE = 3;
+    var MUSIC_PAGE = 4;
+    var CONTACT_PAGE = 5;
 
     var email;
 
@@ -99,6 +107,11 @@
             gotopage(CONTACT_PAGE);
         });
 
+        $(".mmmusic").click(function () {
+            gotopage(MUSIC_PAGE);
+        });
+        
+
         var cemu = 'markomarks';
         var ende = '.com';
         email = ko + ka + cemu + ende;
@@ -116,6 +129,7 @@
                 window.location = 'mailto:' + email;
             });
         });
+        $("#music-page").load("Views/musicPage.html");
 
         
     }

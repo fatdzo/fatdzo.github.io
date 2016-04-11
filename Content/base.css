@@ -37,6 +37,7 @@ p {
     font-size:25px!important;
     font-family:"Trebuchet MS", Helvetica, sans-serif;
     text-indent: 50px;
+    width:100%;
 }
 
 a {
@@ -131,15 +132,47 @@ li.mmli:before {
     font-weight:bold;
     font-style:normal;
 }
+.mmstronger {
+    font-family: Impact, Haettenschweiler, 'Franklin Gothic Bold', Charcoal, 'Helvetica Inserat', 'Bitstream Vera Sans Bold', 'Arial Black', 'sans serif'!important;
+    font-style:normal;
+}
 
 .mmcenter {
     text-align:center;
+}
+
+.mmappblockcontainer {
+    display:table;
 }
 
 .mmappblock {
     display:table-cell;
     vertical-align: middle;
     border-radius:20px;
+    background-color:rgba(42, 76, 83, 0.5);
+    height:600px;
+    padding:10px;
+    padding-top:15px;
+    padding-left:30px;
+    padding-right:30px;
+}
+
+.mmappcellleft {
+    display:table-cell;
+    width:350px;
+    vertical-align: middle;
+    border-radius:20px 0 0 20px;
+    background-color:rgba(42, 76, 83, 0.5);
+    height:600px;
+    padding:10px;
+    padding-top:15px;
+    padding-left:30px;
+    padding-right:30px;
+}
+.mmappcellright {
+    display:table-cell;
+    vertical-align: middle;
+    border-radius:0 20px 20px 0;
     background-color:rgba(42, 76, 83, 0.5);
     height:600px;
     padding:10px;
