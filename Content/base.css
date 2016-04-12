@@ -143,42 +143,40 @@ li.mmli:before {
 
 .mmappblockcontainer {
     display:table;
+    border-radius:20px;
+    background-color:rgba(42, 76, 83, 0.5);
+    width:100%;
+    padding:10px;
+    padding-top:15px;
+    padding-left:30px;
+    padding-right:30px;
 }
 
 .mmappblock {
     display:table-cell;
     vertical-align: middle;
     border-radius:20px;
-    background-color:rgba(42, 76, 83, 0.5);
     height:600px;
-    padding:10px;
-    padding-top:15px;
-    padding-left:30px;
-    padding-right:30px;
 }
 
 .mmappcellleft {
     display:table-cell;
-    width:350px;
     vertical-align: middle;
-    border-radius:20px 0 0 20px;
-    background-color:rgba(42, 76, 83, 0.5);
     height:600px;
-    padding:10px;
-    padding-top:15px;
-    padding-left:30px;
-    padding-right:30px;
 }
 .mmappcellright {
     display:table-cell;
     vertical-align: middle;
-    border-radius:0 20px 20px 0;
-    background-color:rgba(42, 76, 83, 0.5);
     height:600px;
-    padding:10px;
-    padding-top:15px;
-    padding-left:30px;
-    padding-right:30px;
+}
+.mmapprow {
+    display:table-row;
+    width:100%;
+}
+
+.mmappmerged {
+    display:table-cell;
+    width:100%;
 }
 
 .mmsmallappblock {
@@ -240,6 +238,10 @@ li.mmli:before {
 .mmcard img {
     width:150px;
     height:150px;
+}
+
+.mmbottomcontainer {
+    margin-bottom:125px;
 }
 
 /* Bootstrap */
