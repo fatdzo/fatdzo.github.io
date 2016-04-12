@@ -163,11 +163,13 @@ li.mmli:before {
     display:table-cell;
     vertical-align: middle;
     height:600px;
+    padding:10px;
 }
 .mmappcellright {
     display:table-cell;
     vertical-align: middle;
     height:600px;
+    padding:10px;
 }
 .mmapprow {
     display:table-row;
