@@ -4,3 +4,4 @@ Disallow: /Views/contactPage.html
 Disallow: /Views/landingPage.html
 Disallow: /Views/resumePage.html
 Disallow: /Views/musicPage.html
+Disallow: MoruthroKnights.html
