@@ -1,0 +1,23 @@
+﻿body {
+}
+
+label {
+    display:inline-block;
+    min-width:100px;
+}
+
+label span {
+    display:inline-block;
+    min-width:50px;
+}
+
+.mmplyaerinformation {
+    float:left;
+}
+
+.mmgamearea {
+    float:left;
+}
+.mmfooter {
+    clear:left;
+}
