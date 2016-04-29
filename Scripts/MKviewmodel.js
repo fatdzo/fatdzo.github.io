@@ -206,6 +206,15 @@ mmviewmodel.GameViewModel = function () {
         return self.Player2Cards;
     };
 
+    self.hasMaxCarsPlayed = function () {
+        var cardsOnTable = mmviewmodel.numberOfCardsOnTable(self.getCurrentPlayerCards());
+
+        if (self.CardsPlayed < max_cards_played_turn && cardsOnTable < max_num_of_cards_on_table) {
+            return false;
+        }
+        return true;
+    };
+
     self.hasMaxCardsDrawn = function () {
         var cardsInHand = mmviewmodel.numberOfCardsInHand(self.getCurrentPlayerCards());
         

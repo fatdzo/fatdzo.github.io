@@ -255,18 +255,20 @@ mmgamelogic.deSelectCardOnTableAnimation = function (card) {
 
 mmgamelogic.putcardOnTableAnimation = function (card) {
     angular.element($('#mmgamecontroller')).scope().$apply(function ($scope) {
-        if ($scope.Game.CurrentPlayer == PLAYER_1 && card.BelongsToPlayer == PLAYER_1) {
-            if (mmviewmodel.numberOfCardsOnTable($scope.Game.Player1Cards) < max_num_of_cards_on_table) {
-                mmgamelogic.putPlayerCardOnTableAnimation($scope.Game.Player1Cards, card);
+        if (!$scope.Game.hasMaxCarsPlayed()) {
+            if ($scope.Game.CurrentPlayer == PLAYER_1 && card.BelongsToPlayer == PLAYER_1) {
+                if (mmviewmodel.numberOfCardsOnTable($scope.Game.Player1Cards) < max_num_of_cards_on_table) {
+                    mmgamelogic.putPlayerCardOnTableAnimation($scope.Game.Player1Cards, card);
+                }
             }
-            
-        }
-        if ($scope.Game.CurrentPlayer == PLAYER_2 && card.BelongsToPlayer == PLAYER_2) {
-            if (mmviewmodel.numberOfCardsOnTable($scope.Game.Player2Cards) < max_num_of_cards_on_table) {
-                mmgamelogic.putPlayerCardOnTableAnimation($scope.Game.Player2Cards, card);
+            if ($scope.Game.CurrentPlayer == PLAYER_2 && card.BelongsToPlayer == PLAYER_2) {
+                if (mmviewmodel.numberOfCardsOnTable($scope.Game.Player2Cards) < max_num_of_cards_on_table) {
+                    mmgamelogic.putPlayerCardOnTableAnimation($scope.Game.Player2Cards, card);
+                }
             }
+            $scope.Game.CardsPlayed += 1;
+
         }
-        
     });
 
     //.to({ alpha: 0, y: 175 }, 500, createjs.Ease.getPowInOut(2))
