@@ -181,44 +181,58 @@ mmviewmodel.GameViewModel = function () {
     self.Player2 = new mmviewmodel.PlayerViewModel();
     self.Player2Cards = [];
     self.Turn = 1;
-    self.CurrentPlayer = 1;
+    self.CurrentPlayer = -1;
+    self.CardsPlayed = 0;
+    self.CardsDrawn = 0;
     self.GameStart = function () {
         self.Turn = 1;
+        var playerStart = Math.floor(1 + (Math.random() * 2));
+        self.CurrentPlayer = playerStart;
         self.Player1Cards = [];
-        var generatedPl1Cards = mmgamelogic.populateCards(1, number_of_cards, 3 * (canvas_height / 4) + 100, false, 1);
+        var generatedPl1Cards = mmgamelogic.populateCards(PLAYER_1, number_of_cards, mmgamelogic.getCardYValForPlayer(PLAYER_1), false, 1);
         self.Player1Cards = self.Player1Cards.concat(generatedPl1Cards);
 
         self.Player2Cards = [];
-        self.Player2Cards = self.Player2Cards.concat(mmgamelogic.populateCards(2, 5, 0, true, -1));
+        self.Player2Cards = self.Player2Cards.concat(mmgamelogic.populateCards(PLAYER_2, 5, mmgamelogic.getCardYValForPlayer(PLAYER_2), true, -1));
 
         mmgamelogic.renderCards(self.Player1Cards, false);
         mmgamelogic.renderCards(self.Player2Cards, true);
     };
 
-    self.hasMaxNumOfCardsInHand = function (playercards) {
-        var cardsInHand = mmviewmodel.numberOfCardsInHand(playercards);
-        if (cardsInHand < max_num_of_cards_in_hand) {
+    self.getCurrentPlayerCards = function () {
+        if (self.CurrentPlayer == PLAYER_1) {
+            return self.Player1Cards;
+        }
+        return self.Player2Cards;
+    };
+
+    self.hasMaxCardsDrawn = function () {
+        var cardsInHand = mmviewmodel.numberOfCardsInHand(self.getCurrentPlayerCards());
+        
+        if (cardsInHand < max_num_of_cards_in_hand && self.CardsDrawn < max_cards_draw) {
             return false;
         }
         return true;
     }
 
-    self.DrawCard = function (isPlayersMove, playercards) {
-        var cardsInHand = mmviewmodel.numberOfCardsInHand(playercards);
-        if (cardsInHand < max_num_of_cards_in_hand) {
+    self.DrawCard = function () {
+        var cardsInHand = mmviewmodel.numberOfCardsInHand(self.getCurrentPlayerCards());
+        if (cardsInHand < max_num_of_cards_in_hand && self.CardsDrawn < max_cards_draw) {
             var orientationcoef = 1;
             var belongsToPlayer = 1;
             var hidecards = false;
 
-            if (!isPlayersMove) {
+            if (self.CurrentPlayer == PLAYER_2) {
                 orientationcoef = -1;
                 belongsToPlayer = 2;
                 hidecards = true;
             }
 
-            var temp = mmgamelogic.createRandomCard(belongsToPlayer, cardsInHand, self.Player1Cards.length, 3 * (canvas_height / 4) + 100, number_of_cards, hidecards, orientationcoef);
-            self.Player1Cards.push(temp);
+            var temp = mmgamelogic.createRandomCard(belongsToPlayer, cardsInHand, self.getCurrentPlayerCards().length, mmgamelogic.getCardYValForPlayer(self.CurrentPlayer), number_of_cards, hidecards, orientationcoef);
+            self.getCurrentPlayerCards().push(temp);
             self.RenderGame();
+
+            self.CardsDrawn += 1;
         }
     }
 
@@ -228,11 +242,21 @@ mmviewmodel.GameViewModel = function () {
         mmgamelogic.renderCards(self.Player2Cards, true);
     };
 
-    self.isPlayer1Turn = false;
+    self.endTurn = function () {
+        self.goToNextTurn();
+    };
 
     self.goToNextTurn = function () {
         self.Turn += 1;
-        self.isPlayer1Turn = !self.isPlayer1Turn;
+        self.CardsPlayed = 0;
+        self.CardsDrawn = 0;
+        if (self.CurrentPlayer == PLAYER_1) {
+            self.CurrentPlayer = PLAYER_2;
+        }
+        else {
+            self.CurrentPlayer = PLAYER_1;
+        }
+
     };
 
     return self;

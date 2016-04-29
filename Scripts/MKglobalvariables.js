@@ -19,5 +19,10 @@ var canvas_padding_left = 10;
 var number_of_cards = 5;
 var max_num_of_cards_in_hand = 5;
 var max_num_of_cards_on_table = 5;
+var max_cards_played_turn = 1;
+var max_cards_draw = 1;
+
+var PLAYER_1 = 1;
+var PLAYER_2 = 2;
 
 var font_size = 35;

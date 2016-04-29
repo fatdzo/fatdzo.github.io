@@ -121,21 +121,37 @@ function createCard(belongstoplayer, card_type, handIndex, cardIndex, x, y, orie
     });
 
     resultCard.CardBitmap.addEventListener("mouseover", function (event) {
-        if (resultCard.Status == mmviewmodel.CardStatusEnum.InHand) {
-            mmgamelogic.selectCardInHandAnimation(resultCard);
-        }
+        angular.element($('#mmgamecontroller')).scope().$apply(function ($scope) {
+            if (resultCard.Status == mmviewmodel.CardStatusEnum.InHand && $scope.Game.CurrentPlayer == resultCard.BelongsToPlayer) {
+                mmgamelogic.selectCardInHandAnimation(resultCard);
+            }
+        });
     });
 
     resultCard.CardBitmap.addEventListener("mouseout", function (event) {
-        if (resultCard.Status == mmviewmodel.CardStatusEnum.InHand) {
-            mmgamelogic.deselectCardInHandAnimation(resultCard);
-        }
+        angular.element($('#mmgamecontroller')).scope().$apply(function ($scope) {
+            if (resultCard.Status == mmviewmodel.CardStatusEnum.InHand && $scope.Game.CurrentPlayer == resultCard.BelongsToPlayer) {
+                mmgamelogic.deselectCardInHandAnimation(resultCard);
+            }
+        });
+        
 
     });
 
 
     return resultCard;
 }
+
+mmgamelogic.getCardYValForPlayer = function (currentPlayer) {
+    var yval = 0;
+    if (currentPlayer == PLAYER_1) {
+        yval = 3 * (canvas_height / 4) + 100;
+    }
+    if (currentPlayer == PLAYER_2) {
+        yval = 0;
+    }
+    return yval;
+};
 
 mmgamelogic.updateCardBitmap = function (newcardImage, card) {
     card.CardBitmap.image.src = newcardImage;
@@ -239,13 +255,13 @@ mmgamelogic.deSelectCardOnTableAnimation = function (card) {
 
 mmgamelogic.putcardOnTableAnimation = function (card) {
     angular.element($('#mmgamecontroller')).scope().$apply(function ($scope) {
-        if ($scope.Game.CurrentPlayer == 1 && card.BelongsToPlayer == 1) {
+        if ($scope.Game.CurrentPlayer == PLAYER_1 && card.BelongsToPlayer == PLAYER_1) {
             if (mmviewmodel.numberOfCardsOnTable($scope.Game.Player1Cards) < max_num_of_cards_on_table) {
                 mmgamelogic.putPlayerCardOnTableAnimation($scope.Game.Player1Cards, card);
             }
             
         }
-        else {
+        if ($scope.Game.CurrentPlayer == PLAYER_2 && card.BelongsToPlayer == PLAYER_2) {
             if (mmviewmodel.numberOfCardsOnTable($scope.Game.Player2Cards) < max_num_of_cards_on_table) {
                 mmgamelogic.putPlayerCardOnTableAnimation($scope.Game.Player2Cards, card);
             }
