@@ -90,6 +90,7 @@ function createCard(belongstoplayer, card_type, handIndex, cardIndex, x, y, orie
     resultCard.HandIndex = handIndex;
     resultCard.CardIndex = cardIndex;
 
+    console.log("Created: x->" + resultCard.x + "y->" + resultCard.y);
     var cardImage = getCardTypeImage(card_type);
     if (hidecards) {
         cardImage = cardbackImage;
@@ -102,9 +103,21 @@ function createCard(belongstoplayer, card_type, handIndex, cardIndex, x, y, orie
     resultCard.DEFText = createCardDEF(resultCard.x, resultCard.y, resultCard.DEF);
 
     resultCard.CardBitmap.addEventListener("click", function (event) {
+        if (resultCard.Status == mmviewmodel.CardStatusEnum.OnTable) {
+            if (resultCard.IsSelected) {
+                mmgamelogic.deSelectCardOnTableAnimation(resultCard);
+                resultCard.IsSelected = false;
+            }
+            else {
+                mmgamelogic.selectCardOnTableAnimation(resultCard);
+                resultCard.IsSelected = true;
+            }
+            
+        }
         if (resultCard.Status == mmviewmodel.CardStatusEnum.InHand) {
             mmgamelogic.putcardOnTableAnimation(resultCard);
         }
+        
     });
 
     resultCard.CardBitmap.addEventListener("mouseover", function (event) {
@@ -163,7 +176,7 @@ mmgamelogic.putPlayerCardOnTableAnimation = function (playercards, selectedcard)
     for (var i = 0; i < playercards.length; i++) {
         if (i != selectedcard.CardIndex) {
             if (playercards[i].Status == mmviewmodel.CardStatusEnum.InHand) {
-                mmgamelogic.moveCardToNewPosition(playercards[i], (currentHandIndex) * (canvas_width / number_of_cards), playercards[selectedcard.CardIndex].y);
+                mmgamelogic.moveCardToNewPosition(playercards[i], canvas_padding_left + (currentHandIndex) * (canvas_width / number_of_cards), playercards[selectedcard.CardIndex].y);
 
                 createjs.Tween.get(playercards[i].CardBitmap, { loop: false })
                       .to({ x: playercards[i].x }, animtime, createjs.Ease.getPowInOut(4));
@@ -196,7 +209,7 @@ mmgamelogic.putPlayerCardOnTableAnimation = function (playercards, selectedcard)
         }
     }
 
-    mmgamelogic.moveCardToNewPosition(playercards[selectedcard.CardIndex], (tableIndex) * (canvas_width / number_of_cards), selectedcard.y - selectedcard.OrientationCoef * (card_height + card_distance_height));
+    mmgamelogic.moveCardToNewPosition(playercards[selectedcard.CardIndex], canvas_padding_left + (tableIndex) * (canvas_width / number_of_cards), selectedcard.y - selectedcard.OrientationCoef * (card_height + card_distance_height));
 
     createjs.Tween.get(playercards[selectedcard.CardIndex].CardBitmap, { loop: false })
           .to({ x: playercards[selectedcard.CardIndex].x, y: playercards[selectedcard.CardIndex].y }, animtime, createjs.Ease.getPowInOut(4));
@@ -210,6 +223,18 @@ mmgamelogic.putPlayerCardOnTableAnimation = function (playercards, selectedcard)
 
     
     
+};
+
+mmgamelogic.selectCardOnTableAnimation = function (card) {
+    var shape = new createjs.Shape();
+    shape.graphics.beginStroke("#ff0000").drawRect(card.x - 2, card.y - 2, card_width + 4, card_height + 4);
+    card.OutlineShape = shape;
+
+    stage.addChild(card.OutlineShape);
+};
+
+mmgamelogic.deSelectCardOnTableAnimation = function (card) {
+    stage.removeChild(card.OutlineShape);
 };
 
 mmgamelogic.putcardOnTableAnimation = function (card) {
@@ -270,17 +295,6 @@ function loadGame() {
     stage = new createjs.Stage("mmgamecanvas");
     stage.enableMouseOver();
 
-    //var randomType = Math.floor(10 + (Math.random() * 4));
-    //var hideCards = false;
-    //var randomCard = createCard(randomType, Math.floor(Math.random() * 500), 2 * (canvas_height / 4), 1, 1, hideCards);
-    //var windcard = createCard(mmviewmodel.CardTypeEnum.Wind, 0, 0, 10, 10, hideCards);
-    //var watercard = createCard(mmviewmodel.CardTypeEnum.Water, 1 * (canvas_width / 5), 0, 5, 5, hideCards);
-    //var firecard = createCard(mmviewmodel.CardTypeEnum.Fire, 2 * (canvas_width / 5), 0, 4, 4, hideCards);
-    //var earthcard = createCard(mmviewmodel.CardTypeEnum.Earth, 3 * (canvas_width / 5), 0, 2, 2, hideCards);
-    //var backcard = createCard(0, 4 * (canvas_width / 5), 0, null, null, hideCards);
-    //mmgamelogic.renderCards([randomCard, windcard, watercard, firecard, earthcard, backcard], hideCards);
-
-
     createjs.Ticker.setFPS(60);
     createjs.Ticker.addEventListener("tick", stage);
 }
@@ -298,7 +312,7 @@ mmgamelogic.createRandomCard = function (belongstoplayer, handindex, cardindex, 
     var typecard = Math.floor(10 + (Math.random() * 4));
     var damage = Math.floor(Math.random() * 10 + 1);
     var defense = Math.floor(Math.random() * 10 + 1);
-    var temp = createCard(belongstoplayer, typecard, handindex, cardindex, handindex * (canvas_width / numberOfCards), yval, orientationcoef, damage, defense, hidecards);
+    var temp = createCard(belongstoplayer, typecard, handindex, cardindex, canvas_padding_left + handindex * (canvas_width / numberOfCards), yval, orientationcoef, damage, defense, hidecards);
     temp.Status = mmviewmodel.CardStatusEnum.InHand;
     return temp;
 };

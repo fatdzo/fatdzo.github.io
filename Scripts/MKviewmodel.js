@@ -30,6 +30,7 @@ mmviewmodel.CardViewModel = function () {
     self.OrientationCoef = 1;
     self.DMGText = null;
     self.DEFText = null;
+    self.OutlineShape = null;
     self.IsSelected = false;
     self.Hide = false;
     self.Status = mmviewmodel.CardStatusEnum.InDeck;
@@ -173,7 +174,7 @@ mmviewmodel.numberOfCardsOnTable = function (playercards) {
 
 mmviewmodel.GameViewModel = function () {
     var self = this;
-    self.Name = "Moruthro Knights";
+    self.Name = "Moruthro's Knights";
     self.MaxNumberOfCards = 5;
     self.Player1 = new mmviewmodel.PlayerViewModel();
     self.Player1Cards = [];

@@ -18,17 +18,18 @@
         <div id="mmgamecontroller" ng-controller="mmgamecontroller">
             <div class="mmgameheader">
                 <h1>{{ Game.Name }}</h1>
+                <p>
+                    You are the king and control the knights. Do you have what it takes to challenge Moruthro and his knights? Before you get to Moruthro you have to defeat a horde of other kings and their knights.
+                </p>
             </div>
 
             <div class="mmplyaerinformation">
                 <div class="mmplayerbasicinformation">
-
+                    <label>
+                        <span>Player Name:</span>
+                        <input type="text" ng-model="Game.Player1.Name" placeholder="Player name" />
+                    </label>
                 </div>
-                <label>
-                    <span>Player Name:</span> 
-                    <input type="text" ng-model="Game.Player1.Name" placeholder="Player name" />
-                </label>
-                <br />
                 
                 <div class="mmplayerstats">
                     <div class="mmbasicplayerstats">
@@ -98,11 +99,11 @@
             <div class="mmgamearea">
                 <canvas id="mmgamecanvas" width="600" height="700"></canvas>
                 <div class="gamecontrols">
-                    <button>
-                        Attack
-                    </button>
                     <button ng-disabled="Game.hasMaxNumOfCardsInHand(Game.Player1Cards)" ng-click="Game.DrawCard(true, Game.Player1Cards)">
                         DrawCard
+                    </button>
+                    <button>
+                        Attack
                     </button>
                     <button>
                         End turn
