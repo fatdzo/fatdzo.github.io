@@ -252,6 +252,15 @@ mmgamelogic.deSelectCardOnTableAnimation = function (card) {
     stage.removeChild(card.OutlineShape);
 };
 
+mmgamelogic.deselectPlayerCardsOnTable = function (playercards) {
+    for (var i = 0; i < playercards.length; i++) {
+        if (playercards[i].IsSelected && playercards[i].Status == mmviewmodel.CardStatusEnum.OnTable) {
+            playercards[i].IsSelected = false;
+            mmgamelogic.deSelectCardOnTableAnimation(playercards[i]);
+        }
+    }
+};
+
 mmgamelogic.putcardOnTableAnimation = function (card) {
     angular.element($('#mmgamecontroller')).scope().$apply(function ($scope) {
         if (!$scope.Game.hasMaxCarsPlayed()) {
@@ -319,17 +328,17 @@ function loadGame() {
 mmgamelogic.populateCards = function (belongstoplayer, numberOfCards, yval, hidecards, orientationcoef) {
     var resultCards = [];
     for (var i = 0; i < numberOfCards; i++) {
-        var temp = mmgamelogic.createRandomCard(belongstoplayer, i, i, yval, numberOfCards, hidecards,orientationcoef);
+        var temp = mmgamelogic.createRandomCard(belongstoplayer, i, i, yval, hidecards,orientationcoef);
         resultCards.push(temp);
     }
     return resultCards;
 };
 
-mmgamelogic.createRandomCard = function (belongstoplayer, handindex, cardindex, yval, numberOfCards, hidecards, orientationcoef) {
+mmgamelogic.createRandomCard = function (belongstoplayer, handindex, cardindex, yval, hidecards, orientationcoef) {
     var typecard = Math.floor(10 + (Math.random() * 4));
     var damage = Math.floor(Math.random() * 10 + 1);
     var defense = Math.floor(Math.random() * 10 + 1);
-    var temp = createCard(belongstoplayer, typecard, handindex, cardindex, canvas_padding_left + handindex * (canvas_width / numberOfCards), yval, orientationcoef, damage, defense, hidecards);
+    var temp = createCard(belongstoplayer, typecard, handindex, cardindex, canvas_padding_left + handindex * (canvas_width / max_num_of_cards_in_hand), yval, orientationcoef, damage, defense, hidecards);
     temp.Status = mmviewmodel.CardStatusEnum.InHand;
     return temp;
 };

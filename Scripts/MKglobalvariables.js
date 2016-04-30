@@ -17,6 +17,7 @@ var card_distance_height = 20;
 var canvas_padding_left = 10;
 
 var number_of_cards = 5;
+var start_num_of_cards_in_hand = 3;
 var max_num_of_cards_in_hand = 5;
 var max_num_of_cards_on_table = 5;
 var max_cards_played_turn = 1;

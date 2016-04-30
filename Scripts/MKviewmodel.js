@@ -203,11 +203,11 @@ mmviewmodel.GameViewModel = function () {
         var playerStart = Math.floor(1 + (Math.random() * 2));
         self.CurrentPlayer = playerStart;
         self.Player1.PlayerCards = [];
-        var generatedPl1Cards = mmgamelogic.populateCards(PLAYER_1, number_of_cards, mmgamelogic.getCardYValForPlayer(PLAYER_1), false, 1);
+        var generatedPl1Cards = mmgamelogic.populateCards(PLAYER_1, start_num_of_cards_in_hand, mmgamelogic.getCardYValForPlayer(PLAYER_1), false, 1);
         self.Player1.PlayerCards = self.Player1.PlayerCards.concat(generatedPl1Cards);
 
         self.Player2.PlayerCards = [];
-        self.Player2.PlayerCards = self.Player2.PlayerCards.concat(mmgamelogic.populateCards(PLAYER_2, 5, mmgamelogic.getCardYValForPlayer(PLAYER_2), true, -1));
+        self.Player2.PlayerCards = self.Player2.PlayerCards.concat(mmgamelogic.populateCards(PLAYER_2, start_num_of_cards_in_hand, mmgamelogic.getCardYValForPlayer(PLAYER_2), true, -1));
 
         mmgamelogic.renderCards(self.Player1.PlayerCards, false);
         mmgamelogic.renderCards(self.Player2.PlayerCards, true);
@@ -271,7 +271,12 @@ mmviewmodel.GameViewModel = function () {
                 hidecards = true;
             }
 
-            var temp = mmgamelogic.createRandomCard(belongsToPlayer, cardsInHand, self.getCurrentPlayerCards().length, mmgamelogic.getCardYValForPlayer(self.CurrentPlayer), number_of_cards, hidecards, orientationcoef);
+            var temp = mmgamelogic.createRandomCard(belongsToPlayer,
+                                                    cardsInHand,
+                                                    self.getCurrentPlayerCards().length,
+                                                    mmgamelogic.getCardYValForPlayer(self.CurrentPlayer),
+                                                    hidecards,
+                                                    orientationcoef);
             self.getCurrentPlayerCards().push(temp);
             self.RenderGame();
 
@@ -307,16 +312,18 @@ mmviewmodel.GameViewModel = function () {
             if (windDamage > 0) {
                 totwindDamage = windDamage - self.getOpposingPlayer().calculateWind();
             }
-            
 
             damageToOpposingPlayer = totfireDamage + totearthDamage + totwaterDamage + totwindDamage;
-            console.log("F-" + totfireDamage + "E-" + totearthDamage + "W-" + totwaterDamage + "WI-" + totwindDamage);
+            console.log("F- " + totfireDamage + ";E- " + totearthDamage + ";W- " + totwaterDamage + ";WI- " + totwindDamage);
             self.getOpposingPlayer().CurrentHP -= damageToOpposingPlayer;
             self.NumberOfAttacks += 1;
+
+            mmgamelogic.deselectPlayerCardsOnTable(self.getCurrentPlayerCards());
+            mmgamelogic.deselectPlayerCardsOnTable(self.getOpposingPlayer().PlayerCards);
         }
     };
     self.CanAttack = function () {
-        if (self.NumberOfAttacks < max_number_of_attacks && self.GameInProgress) {
+        if (self.NumberOfAttacks < max_number_of_attacks && self.GameInProgress && mmviewmodel.numberOfCardsOnTable(self.getCurrentPlayerCards()) > 0) {
             return false;
         }
         return true;
@@ -330,6 +337,9 @@ mmviewmodel.GameViewModel = function () {
 
     self.endTurn = function () {
         self.goToNextTurn();
+
+        mmgamelogic.deselectPlayerCardsOnTable(self.getCurrentPlayerCards());
+        mmgamelogic.deselectPlayerCardsOnTable(self.getOpposingPlayer().PlayerCards);
     };
 
     self.goToNextTurn = function () {

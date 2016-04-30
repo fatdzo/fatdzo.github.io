@@ -11,13 +11,31 @@ label span {
     min-width:50px;
 }
 
-.mmplyaerinformation {
-    float:left;
+.mmplayerscontainer {
+    
 }
 
 .mmgamearea {
-    float:left;
+    
 }
 .mmfooter {
-    clear:left;
+    
+}
+
+.mmgamearea {
+    background:burlywood;
+}
+.mmplayerinformation {
+    float:left;
+}
+.mmgameinformation {
+    width:200px;
+}
+.mmgamecanvas {
+}
+.mmgamecontrols {
+}
+
+.mmclear {
+    clear:both;
 }
