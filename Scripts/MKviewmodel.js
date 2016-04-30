@@ -41,7 +41,7 @@ mmviewmodel.CardViewModel = function () {
 
 mmviewmodel.PlayerViewModel = function () {
     var self = this;
-    self.Name = "Uknown Knight";
+    self.Name = "Uknown King";
     self.Level = 1;
     self.EXP = 0;
     self.PointsToSpend = 3;
@@ -57,6 +57,7 @@ mmviewmodel.PlayerViewModel = function () {
     self.EARTH = 0;
     self.WIND = 0;
     self.WATER = 0;
+    self.PlayerCards = [];
 
     self.canSpendPoints = function () {
         if (self.PointsToSpend > 0) {
@@ -177,33 +178,55 @@ mmviewmodel.GameViewModel = function () {
     self.Name = "Moruthro's Knights";
     self.MaxNumberOfCards = 5;
     self.Player1 = new mmviewmodel.PlayerViewModel();
-    self.Player1Cards = [];
     self.Player2 = new mmviewmodel.PlayerViewModel();
-    self.Player2Cards = [];
+    self.Player2.PlayerCards = [];
     self.Turn = 1;
     self.CurrentPlayer = -1;
     self.CardsPlayed = 0;
     self.CardsDrawn = 0;
+    self.GameInProgress = false;
     self.GameStart = function () {
         self.Turn = 1;
+        self.GameInProgress = true;
         var playerStart = Math.floor(1 + (Math.random() * 2));
         self.CurrentPlayer = playerStart;
-        self.Player1Cards = [];
+        self.Player1.PlayerCards = [];
         var generatedPl1Cards = mmgamelogic.populateCards(PLAYER_1, number_of_cards, mmgamelogic.getCardYValForPlayer(PLAYER_1), false, 1);
-        self.Player1Cards = self.Player1Cards.concat(generatedPl1Cards);
+        self.Player1.PlayerCards = self.Player1.PlayerCards.concat(generatedPl1Cards);
 
-        self.Player2Cards = [];
-        self.Player2Cards = self.Player2Cards.concat(mmgamelogic.populateCards(PLAYER_2, 5, mmgamelogic.getCardYValForPlayer(PLAYER_2), true, -1));
+        self.Player2.PlayerCards = [];
+        self.Player2.PlayerCards = self.Player2.PlayerCards.concat(mmgamelogic.populateCards(PLAYER_2, 5, mmgamelogic.getCardYValForPlayer(PLAYER_2), true, -1));
 
-        mmgamelogic.renderCards(self.Player1Cards, false);
-        mmgamelogic.renderCards(self.Player2Cards, true);
+        mmgamelogic.renderCards(self.Player1.PlayerCards, false);
+        mmgamelogic.renderCards(self.Player2.PlayerCards, true);
     };
-
+    self.canStartGame = function () {
+        if (!self.Player1.canSpendPoints() && !self.GameInProgress) {
+            return false;
+        }
+        return true;
+    }
     self.getCurrentPlayerCards = function () {
         if (self.CurrentPlayer == PLAYER_1) {
-            return self.Player1Cards;
+            return self.Player1.PlayerCards;
         }
-        return self.Player2Cards;
+        return self.Player2.PlayerCards;
+    };
+
+    self.getOpposingPlayer = function () {
+        if (self.CurrentPlayer == PLAYER_1) {
+            return self.Player2;
+        }
+        return self.Player1;
+    };
+
+
+    self.getCurrentPlayer = function () {
+
+        if (self.CurrentPlayer == PLAYER_1) {
+            return self.Player1;
+        }
+        return self.Player2;
     };
 
     self.hasMaxCarsPlayed = function () {
@@ -244,11 +267,17 @@ mmviewmodel.GameViewModel = function () {
             self.CardsDrawn += 1;
         }
     }
+    self.attack = function () {
+
+        //var calculatedPl1Damage = self.getCurrentPlayer().calculateDamage()
+        //self.getOpposingPlayer().CurrentHP -= self.getCurrentPlayer().
+
+    };
 
     self.RenderGame = function () {
         stage.removeAllChildren();
-        mmgamelogic.renderCards(self.Player1Cards, false);
-        mmgamelogic.renderCards(self.Player2Cards, true);
+        mmgamelogic.renderCards(self.Player1.PlayerCards, false);
+        mmgamelogic.renderCards(self.Player2.PlayerCards, true);
     };
 
     self.endTurn = function () {

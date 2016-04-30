@@ -134,7 +134,6 @@ function createCard(belongstoplayer, card_type, handIndex, cardIndex, x, y, orie
                 mmgamelogic.deselectCardInHandAnimation(resultCard);
             }
         });
-        
 
     });
 
@@ -257,17 +256,17 @@ mmgamelogic.putcardOnTableAnimation = function (card) {
     angular.element($('#mmgamecontroller')).scope().$apply(function ($scope) {
         if (!$scope.Game.hasMaxCarsPlayed()) {
             if ($scope.Game.CurrentPlayer == PLAYER_1 && card.BelongsToPlayer == PLAYER_1) {
-                if (mmviewmodel.numberOfCardsOnTable($scope.Game.Player1Cards) < max_num_of_cards_on_table) {
-                    mmgamelogic.putPlayerCardOnTableAnimation($scope.Game.Player1Cards, card);
+                if (mmviewmodel.numberOfCardsOnTable($scope.Game.Player1.PlayerCards) < max_num_of_cards_on_table) {
+                    mmgamelogic.putPlayerCardOnTableAnimation($scope.Game.Player1.PlayerCards, card);
+                    $scope.Game.CardsPlayed += 1;
                 }
             }
             if ($scope.Game.CurrentPlayer == PLAYER_2 && card.BelongsToPlayer == PLAYER_2) {
-                if (mmviewmodel.numberOfCardsOnTable($scope.Game.Player2Cards) < max_num_of_cards_on_table) {
-                    mmgamelogic.putPlayerCardOnTableAnimation($scope.Game.Player2Cards, card);
+                if (mmviewmodel.numberOfCardsOnTable($scope.Game.Player2.PlayerCards) < max_num_of_cards_on_table) {
+                    mmgamelogic.putPlayerCardOnTableAnimation($scope.Game.Player2.PlayerCards, card);
+                    $scope.Game.CardsPlayed += 1;
                 }
             }
-            $scope.Game.CardsPlayed += 1;
-
         }
     });
 
