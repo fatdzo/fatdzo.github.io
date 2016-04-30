@@ -1,41 +1,106 @@
 ﻿body {
 }
-
 label {
+    display:block;
+}
+.mmstatlabel {
     display:inline-block;
-    min-width:100px;
+    width:100%;
+    height:30px;
+    text-align:center;
 }
 
-label span {
+.mmstatlabel .mmstatvalue {
     display:inline-block;
-    min-width:50px;
+    padding-right:10px;
+    width:60px;
 }
 
-.mmplayerscontainer {
-    
+.mmstatlabel .mmstattitle {
+    display:inline-block;
+    width:60px;
 }
 
-.mmgamearea {
-    
-}
-.mmfooter {
-    
+.mmstatlabel input {
+    margin-right:10px;
 }
 
-.mmgamearea {
-    background:burlywood;
+.mmcontainer {
+    width: 1024px ;
+    margin-left: auto ;
+    margin-right: auto ;
 }
-.mmplayerinformation {
+
+.mmtimer {
+}
+
+.mmplayercontainer {
     float:left;
+    width:20%;
+    height:768px;
+
+    background-color:#ACBDCF;
 }
-.mmgameinformation {
-    width:200px;
+.mmplayercontainer .mmplayerstats {
 }
-.mmgamecanvas {
+.mmplayercontainer .mmbaseplayerinformation {
+}
+.mmplayercontainer .mmbaseplayerstats {
+}
+.mmplayercontainer .mmbaseplayerresistance {
 }
 .mmgamecontrols {
+    text-align:center;
+}
+
+.mmgamearea {
+    float:left;
+    width:60%;
+    height:768px;
+
+    background-color:#846644;
+}
+
+.mmgamearea .mmgameturncontrols {
+    text-align:center;
+}
+
+.mmgameinformation {
+    display:block;
+    float:left;
+    width:20%;
+    height:768px;
+    
+    
+    background-color:#ACBDCF;
+}
+img {
+    display: block;
+    margin: 0 auto;
+}
+.mmgameinformation .mmturninfo {
+}
+
+.mmgameinformation .mmgameplayer {
+    padding-top:20px;
+}
+h1 {
+    text-align:center;
+}
+
+h2 {
+    text-align:center;
+}
+
+h3 {
+    text-align:center;
 }
 
 .mmclear {
     clear:both;
 }
+
+.mmfooter {
+    text-align:center;
+}
+

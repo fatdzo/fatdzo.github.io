@@ -42,7 +42,7 @@ mmviewmodel.CardViewModel = function () {
 
 mmviewmodel.PlayerViewModel = function () {
     var self = this;
-    self.Name = "Uknown King";
+    self.Name = "Unknown King";
     self.Level = 1;
     self.EXP = 0;
     self.PointsToSpend = 3;
@@ -189,8 +189,8 @@ mmviewmodel.GameViewModel = function () {
     self.Name = "Moruthro's Knights";
     self.MaxNumberOfCards = 5;
     self.Player1 = new mmviewmodel.PlayerViewModel();
+    self.Player1.Name = "King Player 1"
     self.Player2 = new mmviewmodel.PlayerViewModel();
-    self.Player2.PlayerCards = [];
     self.Turn = 1;
     self.CurrentPlayer = -1;
     self.CardsPlayed = 0;
@@ -198,6 +198,7 @@ mmviewmodel.GameViewModel = function () {
     self.NumberOfAttacks = 0;
     self.GameInProgress = false;
     self.GameStart = function () {
+        self.Player2.Name = "Enemy king";
         self.Turn = 1;
         self.GameInProgress = true;
         var playerStart = Math.floor(1 + (Math.random() * 2));
@@ -248,6 +249,13 @@ mmviewmodel.GameViewModel = function () {
         }
         return true;
     };
+
+    self.isCurrentPlayer = function (playerflag) {
+        if (self.CurrentPlayer == playerflag) {
+            return true;
+        }
+        return false;
+    }
 
     self.hasMaxCardsDrawn = function () {
         var cardsInHand = mmviewmodel.numberOfCardsInHand(self.getCurrentPlayerCards());

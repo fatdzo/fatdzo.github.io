@@ -14,148 +14,134 @@
     <link href="Content/mkbase.css" rel="stylesheet" />
 </head>
 <body>
-    <div class="mmcontainer">
-        <div id="mmgamecontroller" ng-controller="mmgamecontroller">
-            <div class="mmgameheader">
-                <h1>{{ Game.Name }}</h1>
-                <p>
-                    You are the king and control the knights. Do you have what it takes to challenge Moruthro and his knights? Before you get to Moruthro you have to defeat a horde of other kings and their knights.
-                </p>
-            </div>
-            <div class="mmclear"></div>
-            <div class="mmplayerscontainer">
-                
-                <div class="mmplayerinformation">
-                    <div class="mmplayerbasicinformation">
-                        <h1>Player 1</h1>
-                        <label>
-                            <span>Player Name:</span>
-                            <input type="text" ng-model="Game.Player1.Name" placeholder="Player name" />
-                        </label>
-                        <label>
-                            <span>Wins:</span>
-                            <span ng-bind="Game.Player1.Wins"></span>
-                        </label>
-                        <label>
-                            <span>Losses:</span>
-                            <span ng-bind="Game.Player1.Losses"></span>
-                        </label>
-                    </div>
-                    <div class="mmplayerstats">
-                        <div class="mmbasicplayerstats">
-                            <label>
-                                <span>Level:</span>
-                                <span ng-bind="Game.Player1.Level"></span>
-                            </label>
-                            <label>
-                                <span>Points to spend:</span>
-                                <span ng-bind="Game.Player1.PointsToSpend"></span>
-                            </label>
-                            <br />
-                            <label>
-                                <span>HP:</span>
-                                <span ng-bind="Game.Player1.CurrentHP"></span>
-                            </label>
-                        </div>
+    <div id="mmgamecontroller" class="mmcontainer" ng-controller="mmgamecontroller">
+        <div class="mmgameheader">
+            <h1>{{ Game.Name }}</h1>
+            <p>
+                You are the king and control the knights. Do you have what it takes to challenge Moruthro and his knights? Before you get to Moruthro you have to defeat a horde of other kings and their knights.
+            </p>
+        </div>
+        <div class="mmplayercontainer" >
+            <div class="mmplayerstats">
+                <div class="mmbaseplayerinformation">
 
-                        <div class="mmallplayerstats">
-                            <label>
-                                <span>STR</span>
-                                <span ng-bind="Game.Player1.STR"></span>
-                                <input ng-show="Game.Player1.canSpendPoints()" type="button" value="+" ng-click="Game.Player1.addSTR()" />
-                            </label>
-                            <br />
-                            <label>
-                                <span>DEX</span>
-                                <span ng-bind="Game.Player1.DEX"></span>
-                                <input ng-show="Game.Player1.canSpendPoints()" type="button" value="+" ng-click="Game.Player1.addDEX()" />
-                            </label>
-                            <br />
-                            <label>
-                                <span>MAG</span>
-                                <span ng-bind="Game.Player1.MAG"></span>
-                                <input ng-show="Game.Player1.canSpendPoints()" type="button" value="+" ng-click="Game.Player1.addMAG()" />
-                            </label>
-                            <br />
-                            <label>
-                                <span>CON</span>
-                                <span ng-bind="Game.Player1.CON"></span>
-                                <input ng-show="Game.Player1.canSpendPoints()" type="button" value="+" ng-click="Game.Player1.addCON()" />
-                            </label>
-                        </div>
-                    </div>
-
-                    <div class="mmresistance">
-                        <label>
-                            <span>Earth</span>
-                            <span ng-bind="Game.Player1.EARTH"></span>
-                        </label>
-                        <label>
-                            <span>Wind</span>
-                            <span ng-bind="Game.Player1.WIND"></span>
-                        </label>
-                        <label>
-                            <span>Fire</span>
-                            <span ng-bind="Game.Player1.FIRE"></span>
-                        </label>
-                        <label>
-                            <span>Water</span>
-                            <span ng-bind="Game.Player1.WATER"></span>
-                        </label>
-                    </div>
+                    <h2>
+                        <span>{{Game.Player1.Name}}</span>
+                    </h2>
+                    <!--<input type="text" ng-model="Game.Player1.Name" placeholder="Player name" />-->
+                    <h3>
+                        <span>Level:</span>
+                        <span ng-bind="Game.Player1.Level"></span>
+                    </h3>
+                    <label class="mmstatlabel">
+                        <span>Skill points:</span>
+                        <span ng-bind="Game.Player1.PointsToSpend"></span>
+                    </label>
+                    <label class="mmstatlabel">
+                        <span>Wins:</span>
+                        <span ng-bind="Game.Player1.Wins"></span>
+                    </label>
+                    <label class="mmstatlabel">
+                        <span>Losses:</span>
+                        <span ng-bind="Game.Player1.Losses"></span>
+                    </label>
+                    <label class="mmstatlabel">
+                        <span>HP:</span>
+                        <span ng-bind="Game.Player1.CurrentHP"></span>(<span ng-bind="Game.Player1.HP"></span>)
+                    </label>
                 </div>
-                <div class="mmplayerinformation">
-                    <div class="mmplayerbasicinformation">
-                        <h1>Player 2</h1>
-                        <label>
-                            <span>Enemy level:</span>
-                            <input type="text" ng-model="Game.Player2.Level" placeholder="Player name" />
-                        </label>
-                        <label>
-                            <span>HP:</span>
-                            <span ng-bind="Game.Player2.CurrentHP"></span>
-                        </label>
-                    </div>
+                <div class="mmbaseplayerstats">
+                    <h2>Stats</h2>
+                    <label class="mmstatlabel">
+                        <span class="mmstattitle">STR</span>
+                        <span class="mmstatvalue" ng-bind="Game.Player1.STR"></span>
+                        <input ng-show="Game.Player1.canSpendPoints()" type="button" value="+" ng-click="Game.Player1.addSTR()" />
+                    </label>
+                    <br />
+                    <label class="mmstatlabel">
+                        <span class="mmstattitle">DEX</span>
+                        <span class="mmstatvalue" ng-bind="Game.Player1.DEX"></span>
+                        <input ng-show="Game.Player1.canSpendPoints()" type="button" value="+" ng-click="Game.Player1.addDEX()" />
+                    </label>
+                    <br />
+                    <label class="mmstatlabel">
+                        <span class="mmstattitle">MAG</span>
+                        <span class="mmstatvalue" ng-bind="Game.Player1.MAG"></span>
+                        <input ng-show="Game.Player1.canSpendPoints()" type="button" value="+" ng-click="Game.Player1.addMAG()" />
+                    </label>
+                    <br />
+                    <label class="mmstatlabel">
+                        <span class="mmstattitle">CON</span>
+                        <span class="mmstatvalue" ng-bind="Game.Player1.CON"></span>
+                        <input ng-show="Game.Player1.canSpendPoints()" type="button" value="+" ng-click="Game.Player1.addCON()" />
+                    </label>
+                </div>
+                <div class="mmbaseplayerresistance">
+                    <h2>Resistances</h2>
+                    <label class="mmstatlabel">
+                        <span class="mmstattitle">EARTH</span>
+                        <span class="mmstatvalue" ng-bind="Game.Player1.EARTH"></span>
+                    </label>
+                    <label class="mmstatlabel">
+                        <span class="mmstattitle">WIND</span>
+                        <span class="mmstatvalue" ng-bind="Game.Player1.WIND"></span>
+                    </label>
+                    <label class="mmstatlabel">
+                        <span class="mmstattitle">FIRE</span>
+                        <span class="mmstatvalue" ng-bind="Game.Player1.FIRE"></span>
+                    </label>
+                    <label class="mmstatlabel">
+                        <span class="mmstattitle">WATER</span>
+                        <span class="mmstatvalue" ng-bind="Game.Player1.WATER"></span>
+                    </label>
                 </div>
             </div>
-            <div class="mmclear"></div>
-
-            <div class="mmgamearea">
-                <div class="mmgameinformation">
-                    <div>
-                        <h3>
-                            <span>Turn:</span>
-                            <span type="text" ng-bind="Game.Turn" />
-                        </h3>
-                        <h3>
-                            <span>Player:</span>
-                            <span type="text" ng-bind="Game.CurrentPlayer" />
-                        </h3>
-                    </div>
-                    <button ng-disabled="Game.canStartGame()" ng-click="Game.GameStart()">
-                        Game start
-                    </button>
-                </div>
-
-                <canvas id="mmgamecanvas" width="600" height="700"></canvas>
-                
-                <div class="mmgamecontrols">
-                    <button ng-disabled="Game.hasMaxCardsDrawn()" ng-click="Game.DrawCard()">
-                        DrawCard
-                    </button>
-                    <button ng-disabled="Game.CanAttack()" ng-click="Game.attack()">
-                        Attack
-                    </button>
-                    <button ng-disabled="Game.GameInProgress==false" ng-click="Game.endTurn()">
-                        End turn
-                    </button>
-                </div>
+            <div class="mmgamecontrols">
+                <button ng-disabled="Game.canStartGame()" ng-click="Game.GameStart()">
+                    Game start
+                </button>
             </div>
         </div>
-        <div class="mmfooter">
-            <h2>Technologies used: AngularJS, CreateJS</h2>
+        <div class="mmgamearea">
+            <canvas id="mmgamecanvas" width="600" height="700"></canvas>
+            <div class="mmgameturncontrols">
+                <button ng-disabled="Game.CanAttack()" ng-click="Game.attack()">
+                    Attack
+                </button>
+                <button ng-disabled="Game.hasMaxCardsDrawn()" ng-click="Game.DrawCard()">
+                    DrawCard
+                </button>
+                <button ng-disabled="Game.GameInProgress==false" ng-click="Game.endTurn()">
+                    End turn
+                </button>
+            </div>
+        </div>
+        <div ng-show="Game.GameInProgress" class="mmgameinformation">
+            <div class="mmgameplayer">
+                <h3><span ng-bind="Game.Player2.Name"></span>(<span ng-bind="Game.Player2.Level"></span>)</h3>
+                <h1><span ng-bind="Game.Player2.CurrentHP"></span></h1>
+            </div>
+            <div class="mmturninfo">
+                &nbsp;
+                <img src="Content/img/arrowup.png" ng-show="Game.isCurrentPlayer(1)"/>
+                <img src="Content/img/arrowdown.png" ng-show="Game.isCurrentPlayer(2)"/>
+            </div>
+            <div class="mmgameplayer">
+                <h3><span ng-bind="Game.Player1.Name"></span>(<span ng-bind="Game.Player1.Level"></span>)</h3>
+                <h1><span ng-bind="Game.Player1.CurrentHP"></span></h1>
+            </div>
+            <div class="mmturninfo">
+                <h2>
+                    <span>Turn:</span>
+                    <span type="text" ng-bind="Game.Turn" />
+                </h2>
+            </div>
         </div>
         
+        <div class="mmclear"></div>
+        <div class="mmfooter">
+            <h2>Technologies used: AngularJS, CreateJS</h2>
+        </div> 
     </div>
 </body>
 </html>
