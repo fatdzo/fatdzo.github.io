@@ -55,25 +55,25 @@
                     <label class="mmstatlabel">
                         <span class="mmstattitle">STR</span>
                         <span class="mmstatvalue" ng-bind="Game.Player1.STR"></span>
-                        <input ng-show="Game.Player1.canSpendPoints()" type="button" value="+" ng-click="Game.Player1.addSTR()" />
+                        <input ng-disabled="Game.Player1.canSpendPoints() == false" type="button" value="+" ng-click="Game.Player1.addSTR()" />
                     </label>
                     <br />
                     <label class="mmstatlabel">
                         <span class="mmstattitle">DEX</span>
                         <span class="mmstatvalue" ng-bind="Game.Player1.DEX"></span>
-                        <input ng-show="Game.Player1.canSpendPoints()" type="button" value="+" ng-click="Game.Player1.addDEX()" />
+                        <input ng-disabled="Game.Player1.canSpendPoints() == false" type="button" value="+" ng-click="Game.Player1.addDEX()" />
                     </label>
                     <br />
                     <label class="mmstatlabel">
                         <span class="mmstattitle">MAG</span>
                         <span class="mmstatvalue" ng-bind="Game.Player1.MAG"></span>
-                        <input ng-show="Game.Player1.canSpendPoints()" type="button" value="+" ng-click="Game.Player1.addMAG()" />
+                        <input ng-disabled="Game.Player1.canSpendPoints() == false" type="button" value="+" ng-click="Game.Player1.addMAG()" />
                     </label>
                     <br />
                     <label class="mmstatlabel">
                         <span class="mmstattitle">CON</span>
                         <span class="mmstatvalue" ng-bind="Game.Player1.CON"></span>
-                        <input ng-show="Game.Player1.canSpendPoints()" type="button" value="+" ng-click="Game.Player1.addCON()" />
+                        <input ng-disabled="Game.Player1.canSpendPoints() == false" type="button" value="+" ng-click="Game.Player1.addCON()" />
                     </label>
                 </div>
                 <div class="mmbaseplayerresistance">

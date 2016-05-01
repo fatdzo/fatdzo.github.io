@@ -42,6 +42,7 @@ mmviewmodel.CardViewModel = function () {
 
 mmviewmodel.PlayerViewModel = function () {
     var self = this;
+    self.Id = -1;
     self.Name = "Unknown King";
     self.Level = 1;
     self.EXP = 0;
@@ -199,8 +200,10 @@ mmviewmodel.GameViewModel = function () {
     self.Name = "Moruthro's Knights";
     self.MaxNumberOfCards = 5;
     self.Player1 = new mmviewmodel.PlayerViewModel();
+    self.Player1.Id = PLAYER_1;
     self.Player1.Name = "King Player 1"
     self.Player2 = new mmviewmodel.PlayerViewModel();
+    self.Player2.Id = PLAYER_2;
     self.Turn = 1;
     self.CurrentPlayer = -1;
     self.CardsPlayed = 0;
@@ -304,8 +307,8 @@ mmviewmodel.GameViewModel = function () {
     }
     self.attack = function () {
         if (self.NumberOfAttacks < max_number_of_attacks) {
-            var damageToOpposingPlayer = 0;
             //Attacking cards
+            var currentplayerlostcards = false;
             for (var i = 0; i < self.getCurrentPlayerCards().length; i++) {
                 if (self.getCurrentPlayerCards()[i].OpposingCardIndex > 0) {
                     self.getOpposingPlayer().PlayerCards[self.getCurrentPlayerCards()[i].OpposingCardIndex].DEF -= self.getCurrentPlayerCards()[i].DMG;
@@ -314,16 +317,26 @@ mmviewmodel.GameViewModel = function () {
                     mmgamelogic.updateDMGDEFText(self.getCurrentPlayerCards()[i]);
 
                     if (self.getCurrentPlayerCards()[i].DEF <= 0) {
+                        currentplayerlostcards = true;
                         self.getCurrentPlayerCards()[i].Status = mmviewmodel.CardStatusEnum.GraveYard;
                     }
                     
                     if (self.getOpposingPlayer().PlayerCards[self.getCurrentPlayerCards()[i].OpposingCardIndex].DEF <= 0) {
                         self.getOpposingPlayer().PlayerCards[self.getCurrentPlayerCards()[i].OpposingCardIndex].Status = mmviewmodel.CardStatusEnum.GraveYard;
+                        
+                        mmgamelogic.moveCardsToTheLeftAnimation(self.getOpposingPlayer().PlayerCards, mmgamelogic.calculateCardYValForPlayer(self.getOpposingPlayer().Id, mmviewmodel.CardStatusEnum.OnTable), mmviewmodel.CardStatusEnum.OnTable);
                     }
                 }
             }
 
+            if (currentplayerlostcards) {
+                mmgamelogic.moveCardsToTheLeftAnimation(self.getCurrentPlayerCards(), mmgamelogic.calculateCardYValForPlayer(self.CurrentPlayer, mmviewmodel.CardStatusEnum.OnTable), mmviewmodel.CardStatusEnum.OnTable);
+            }
+
+            
+
             //Attacking player
+            var damageToOpposingPlayer = 0;
             var fireDamage = self.getCurrentPlayer().calculatePlayerDamageType(mmviewmodel.CardTypeEnum.Fire);
             var earthDamage = self.getCurrentPlayer().calculatePlayerDamageType(mmviewmodel.CardTypeEnum.Earth);
             var waterDamage = self.getCurrentPlayer().calculatePlayerDamageType(mmviewmodel.CardTypeEnum.Water);

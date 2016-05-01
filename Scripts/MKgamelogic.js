@@ -198,18 +198,21 @@ function createCard(belongstoplayer, card_type, handIndex, cardIndex, x, y, orie
 
 mmgamelogic.calculateCardYValForPlayer = function (currentPlayer, cardstatus) {
     var yval = 0;
+    
     if (currentPlayer == PLAYER_1 && cardstatus == mmviewmodel.CardStatusEnum.InHand) {
         yval = 3 * (canvas_height / 4) + 100;
     }
     if (currentPlayer == PLAYER_1 && cardstatus == mmviewmodel.CardStatusEnum.OnTable) {
-        yval = 3 * (canvas_height / 4) + 100 - card_height;
+        var yposition = 3 * (canvas_height / 4) + 100;
+        yval = yposition - 1 * (card_height + card_distance_height);
     }
     if (currentPlayer == PLAYER_2 && cardstatus == mmviewmodel.CardStatusEnum.InHand) {
         yval = 0;
     }
     if (currentPlayer == PLAYER_2 && cardstatus == mmviewmodel.CardStatusEnum.OnTable) {
-        yval = card_height;
+        yval = 1 * (card_height + card_distance_height);
     }
+    console.log("NEW YVAL -> " + yval);
     return yval;
 };
 
@@ -243,13 +246,13 @@ mmgamelogic.deselectCardInHandAnimation = function (card) {
         .to({ y: calculateDEFTextY(card.y, card.DMG) }, animtime, createjs.Ease.getPowInOut(4));
 };
 
-mmgamelogic.moveCardsToTheLeftAnimation = function (playercards, selectedcard) {
+mmgamelogic.moveCardsToTheLeftAnimation = function (playercards, yval, cardstatus) {
     var animtime = 1000;
     var currentHandIndex = -1;
     for (var i = 0; i < playercards.length; i++) {
-        if (playercards[i].Status == mmviewmodel.CardStatusEnum.InHand) {
+        if (playercards[i].Status == cardstatus) {
             currentHandIndex += 1;
-            mmgamelogic.moveCardToNewPosition(playercards[i], canvas_padding_left + (currentHandIndex) * (canvas_width / number_of_cards), playercards[selectedcard.CardIndex].y);
+            mmgamelogic.moveCardToNewPosition(playercards[i], canvas_padding_left + (currentHandIndex) * (canvas_width / number_of_cards), yval);
 
             createjs.Tween.get(playercards[i].CardBitmap, { loop: false })
                   .to({ x: playercards[i].x }, animtime, createjs.Ease.getPowInOut(4));
@@ -268,7 +271,7 @@ mmgamelogic.putPlayerCardOnTableAnimation = function (playercards, selectedcard)
     var animtime = 1000;
     playercards[selectedcard.CardIndex].Status = mmviewmodel.CardStatusEnum.OnTable;
     
-    mmgamelogic.moveCardsToTheLeftAnimation(playercards, selectedcard);
+    mmgamelogic.moveCardsToTheLeftAnimation(playercards, playercards[selectedcard.CardIndex].y, mmviewmodel.CardStatusEnum.InHand);
 
     if (selectedcard.Hide) {
         var cardImage = getCardTypeImage(selectedcard.TYPE);
