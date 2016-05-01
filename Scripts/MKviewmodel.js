@@ -215,11 +215,11 @@ mmviewmodel.GameViewModel = function () {
         var playerStart = Math.floor(1 + (Math.random() * 2));
         self.CurrentPlayer = playerStart;
         self.Player1.PlayerCards = [];
-        var generatedPl1Cards = mmgamelogic.populateCards(PLAYER_1, start_num_of_cards_in_hand, mmgamelogic.getCardYValForPlayer(PLAYER_1), false, 1);
+        var generatedPl1Cards = mmgamelogic.populateCards(PLAYER_1, start_num_of_cards_in_hand, mmgamelogic.calculateCardYValForPlayer(PLAYER_1, mmviewmodel.CardStatusEnum.InHand), false, 1);
         self.Player1.PlayerCards = self.Player1.PlayerCards.concat(generatedPl1Cards);
 
         self.Player2.PlayerCards = [];
-        self.Player2.PlayerCards = self.Player2.PlayerCards.concat(mmgamelogic.populateCards(PLAYER_2, start_num_of_cards_in_hand, mmgamelogic.getCardYValForPlayer(PLAYER_2), true, -1));
+        self.Player2.PlayerCards = self.Player2.PlayerCards.concat(mmgamelogic.populateCards(PLAYER_2, start_num_of_cards_in_hand, mmgamelogic.calculateCardYValForPlayer(PLAYER_2, mmviewmodel.CardStatusEnum.InHand), true, -1));
 
         mmgamelogic.renderCards(self.Player1.PlayerCards, false);
         mmgamelogic.renderCards(self.Player2.PlayerCards, true);
@@ -293,7 +293,7 @@ mmviewmodel.GameViewModel = function () {
             var temp = mmgamelogic.createRandomCard(belongsToPlayer,
                                                     cardsInHand,
                                                     self.getCurrentPlayerCards().length,
-                                                    mmgamelogic.getCardYValForPlayer(self.CurrentPlayer),
+                                                    mmgamelogic.calculateCardYValForPlayer(self.CurrentPlayer, mmviewmodel.CardStatusEnum.InHand),
                                                     hidecards,
                                                     orientationcoef);
             self.getCurrentPlayerCards().push(temp);

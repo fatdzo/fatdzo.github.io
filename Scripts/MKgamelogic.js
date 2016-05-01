@@ -196,13 +196,19 @@ function createCard(belongstoplayer, card_type, handIndex, cardIndex, x, y, orie
     return resultCard;
 }
 
-mmgamelogic.getCardYValForPlayer = function (currentPlayer) {
+mmgamelogic.calculateCardYValForPlayer = function (currentPlayer, cardstatus) {
     var yval = 0;
-    if (currentPlayer == PLAYER_1) {
+    if (currentPlayer == PLAYER_1 && cardstatus == mmviewmodel.CardStatusEnum.InHand) {
         yval = 3 * (canvas_height / 4) + 100;
     }
-    if (currentPlayer == PLAYER_2) {
+    if (currentPlayer == PLAYER_1 && cardstatus == mmviewmodel.CardStatusEnum.OnTable) {
+        yval = 3 * (canvas_height / 4) + 100 - card_height;
+    }
+    if (currentPlayer == PLAYER_2 && cardstatus == mmviewmodel.CardStatusEnum.InHand) {
         yval = 0;
+    }
+    if (currentPlayer == PLAYER_2 && cardstatus == mmviewmodel.CardStatusEnum.OnTable) {
+        yval = card_height;
     }
     return yval;
 };
