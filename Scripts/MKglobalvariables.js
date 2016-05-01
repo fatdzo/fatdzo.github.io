@@ -28,3 +28,7 @@ var PLAYER_1 = 1;
 var PLAYER_2 = 2;
 
 var font_size = 35;
+
+var color_card_stats = "#FFFFFF";
+var color_card_stats_pos = "#00FF00";
+var color_card_stats_neg = "#FF0000";

@@ -34,9 +34,9 @@ mmviewmodel.CardViewModel = function () {
     self.IsSelected = false;
     self.Hide = false;
     self.Status = mmviewmodel.CardStatusEnum.InDeck;
-    self.HandIndex = 0;
+    self.HandIndex = -1;
     self.TableIndex = -1;
-    self.CardIndex = 0;
+    self.CardIndex = -1;
     self.OpposingCardIndex = -1;
 };
 
@@ -174,6 +174,16 @@ mmviewmodel.numberOfCardsInHand = function (playercards) {
     return cardsInHand;
 };
 
+mmviewmodel.numberOfSelectedCards = function (playercards) {
+    var numSelectedCards = 0;
+    for (var i = 0; i < playercards.length; i++) {
+        if (playercards[i].Status == mmviewmodel.CardStatusEnum.OnTable && playercards[i].IsSelected) {
+            numSelectedCards += 1;
+        }
+    }
+    return numSelectedCards;
+};
+
 mmviewmodel.numberOfCardsOnTable = function (playercards) {
     var cardsOnTable = 0;
     for (var i = 0; i < playercards.length ; i++) {
@@ -197,6 +207,7 @@ mmviewmodel.GameViewModel = function () {
     self.CardsDrawn = 0;
     self.NumberOfAttacks = 0;
     self.GameInProgress = false;
+    self.CurrentPlayerCardIndex = -1;
     self.GameStart = function () {
         self.Player2.Name = "Enemy king";
         self.Turn = 1;
@@ -294,7 +305,25 @@ mmviewmodel.GameViewModel = function () {
     self.attack = function () {
         if (self.NumberOfAttacks < max_number_of_attacks) {
             var damageToOpposingPlayer = 0;
+            //Attacking cards
+            for (var i = 0; i < self.getCurrentPlayerCards().length; i++) {
+                if (self.getCurrentPlayerCards()[i].OpposingCardIndex > 0) {
+                    self.getOpposingPlayer().PlayerCards[self.getCurrentPlayerCards()[i].OpposingCardIndex].DEF -= self.getCurrentPlayerCards()[i].DMG;
+                    self.getCurrentPlayerCards()[i].DEF -= self.getOpposingPlayer().PlayerCards[self.getCurrentPlayerCards()[i].OpposingCardIndex].DMG;
+                    mmgamelogic.updateDMGDEFText(self.getOpposingPlayer().PlayerCards[self.getCurrentPlayerCards()[i].OpposingCardIndex]);
+                    mmgamelogic.updateDMGDEFText(self.getCurrentPlayerCards()[i]);
 
+                    if (self.getCurrentPlayerCards()[i].DEF <= 0) {
+                        self.getCurrentPlayerCards()[i].Status = mmviewmodel.CardStatusEnum.GraveYard;
+                    }
+                    
+                    if (self.getOpposingPlayer().PlayerCards[self.getCurrentPlayerCards()[i].OpposingCardIndex].DEF <= 0) {
+                        self.getOpposingPlayer().PlayerCards[self.getCurrentPlayerCards()[i].OpposingCardIndex].Status = mmviewmodel.CardStatusEnum.GraveYard;
+                    }
+                }
+            }
+
+            //Attacking player
             var fireDamage = self.getCurrentPlayer().calculatePlayerDamageType(mmviewmodel.CardTypeEnum.Fire);
             var earthDamage = self.getCurrentPlayer().calculatePlayerDamageType(mmviewmodel.CardTypeEnum.Earth);
             var waterDamage = self.getCurrentPlayer().calculatePlayerDamageType(mmviewmodel.CardTypeEnum.Water);
@@ -331,7 +360,7 @@ mmviewmodel.GameViewModel = function () {
         }
     };
     self.CanAttack = function () {
-        if (self.NumberOfAttacks < max_number_of_attacks && self.GameInProgress && mmviewmodel.numberOfCardsOnTable(self.getCurrentPlayerCards()) > 0) {
+        if (self.NumberOfAttacks < max_number_of_attacks && self.GameInProgress && mmviewmodel.numberOfSelectedCards(self.getCurrentPlayerCards()) > 0) {
             return false;
         }
         return true;
