@@ -130,6 +130,8 @@ li.mmli:before {
 
 .mmstrong {
     font-weight:bold;
+    color:#AAF0D1;
+    font-size:x-large;
     font-style:normal;
 }
 .mmstronger {
