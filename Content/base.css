@@ -161,6 +161,32 @@ li.mmli:before {
     height:600px;
 }
 
+.mmcellfloatcontainer {
+    width:100%;
+}
+
+.mmcellfloat {
+    position:relative;
+    float: left;
+}
+
+    .mmcellfloat.first {
+        width:175px;
+    }
+    .mmcellfloat.second {
+        padding-top:35px;
+        height:150px;
+    }
+    .mmcellfloat.third {
+        padding-top:35px;
+        float:right;
+        text-align:right;
+    }
+
+.mmclearfix {
+    clear:both;
+}
+
 .mmappcellleft {
     display:table-cell;
     vertical-align: middle;
