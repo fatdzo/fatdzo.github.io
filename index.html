@@ -112,7 +112,10 @@
         $("#contact-page").load("Views/contactPage.html", function () {
             $('#contact-email').html(email);
             $('#contact-email').click(function (event) {
-                window.location = 'mailto:' + email;
+                window.open(
+                  'mailto:' + email,
+                  '_blank'
+                );
             });
         });
         $("#music-page").load("Views/musicPage.html");
