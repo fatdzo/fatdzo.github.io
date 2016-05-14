@@ -101,7 +101,7 @@ mmviewmodel.PlayerViewModel = function () {
         var calcdmg = 0;
         for (var i = 0; i < self.PlayerCards.length; i++) {
             if (self.PlayerCards[i].OpposingCardIndex == -1 && self.PlayerCards[i].IsSelected && self.PlayerCards[i].Status == mmviewmodel.CardStatusEnum.OnTable && self.PlayerCards[i].TYPE == cardtype) {
-                calcdmg += self.PlayerCards[i].DMG;
+                calcdmg += self.PlayerCards[i].getDMG();
             }
         }
         return calcdmg;
@@ -273,11 +273,11 @@ mmviewmodel.GameViewModel = function () {
         var playerStart = Math.floor(1 + (Math.random() * 2));
         self.CurrentPlayer = playerStart;
         self.Player1.PlayerCards = [];
-        var generatedPl1Cards = mmgamelogic.populateCards(PLAYER_1, start_num_of_cards_in_hand, mmgamelogic.calculateCardYValForPlayer(PLAYER_1, mmviewmodel.CardStatusEnum.InHand), false, 1);
+        var generatedPl1Cards = mmgamelogic.populateCards(self.Player1, start_num_of_cards_in_hand, mmgamelogic.calculateCardYValForPlayer(PLAYER_1, mmviewmodel.CardStatusEnum.InHand));
         self.Player1.PlayerCards = self.Player1.PlayerCards.concat(generatedPl1Cards);
 
         self.Player2.PlayerCards = [];
-        self.Player2.PlayerCards = self.Player2.PlayerCards.concat(mmgamelogic.populateCards(PLAYER_2, start_num_of_cards_in_hand, mmgamelogic.calculateCardYValForPlayer(PLAYER_2, mmviewmodel.CardStatusEnum.InHand), true, -1));
+        self.Player2.PlayerCards = self.Player2.PlayerCards.concat(mmgamelogic.populateCards(self.Player2, start_num_of_cards_in_hand, mmgamelogic.calculateCardYValForPlayer(PLAYER_2, mmviewmodel.CardStatusEnum.InHand)));
 
         mmgamelogic.renderCards(self.Player1.PlayerCards, false);
         mmgamelogic.renderCards(self.Player2.PlayerCards, true);
@@ -355,22 +355,11 @@ mmviewmodel.GameViewModel = function () {
     self.playerDrawsCard = function () {
         var cardsInHand = mmviewmodel.numberOfCardsInHand(self.getCurrentPlayerCards());
         if (cardsInHand < max_num_of_cards_in_hand && self.CardsDrawn < max_cards_draw) {
-            var orientationcoef = 1;
-            var belongsToPlayer = 1;
-            var hidecards = false;
-
-            if (self.CurrentPlayer == PLAYER_2) {
-                orientationcoef = -1;
-                belongsToPlayer = 2;
-                hidecards = true;
-            }
-
-            var temp = mmgamelogic.createRandomCard(belongsToPlayer,
+            var temp = mmgamelogic.createRandomCard(self.getCurrentPlayer(),
                                                     cardsInHand,
                                                     self.getCurrentPlayerCards().length,
-                                                    mmgamelogic.calculateCardYValForPlayer(self.CurrentPlayer, mmviewmodel.CardStatusEnum.InHand),
-                                                    hidecards,
-                                                    orientationcoef);
+                                                    mmgamelogic.calculateCardYValForPlayer(self.CurrentPlayer, mmviewmodel.CardStatusEnum.InHand)
+                                                    );
             self.getCurrentPlayerCards().push(temp);
             self.RenderGame();
 
@@ -383,17 +372,17 @@ mmviewmodel.GameViewModel = function () {
             var currentplayerlostcards = false;
             for (var i = 0; i < self.getCurrentPlayerCards().length; i++) {
                 if (self.getCurrentPlayerCards()[i].OpposingCardIndex > 0) {
-                    self.getOpposingPlayer().PlayerCards[self.getCurrentPlayerCards()[i].OpposingCardIndex].DEF -= self.getCurrentPlayerCards()[i].DMG;
-                    self.getCurrentPlayerCards()[i].DEF -= self.getOpposingPlayer().PlayerCards[self.getCurrentPlayerCards()[i].OpposingCardIndex].DMG;
+                    self.getOpposingPlayer().PlayerCards[self.getCurrentPlayerCards()[i].OpposingCardIndex].DEF -= self.getCurrentPlayerCards()[i].getDMG();
+                    self.getCurrentPlayerCards()[i].DEF -= self.getOpposingPlayer().PlayerCards[self.getCurrentPlayerCards()[i].OpposingCardIndex].getDMG();
                     mmgamelogic.updateDMGDEFText(self.getOpposingPlayer().PlayerCards[self.getCurrentPlayerCards()[i].OpposingCardIndex]);
                     mmgamelogic.updateDMGDEFText(self.getCurrentPlayerCards()[i]);
 
-                    if (self.getCurrentPlayerCards()[i].DEF <= 0) {
+                    if (self.getCurrentPlayerCards()[i].getDEF() <= 0) {
                         currentplayerlostcards = true;
                         self.getCurrentPlayerCards()[i].Status = mmviewmodel.CardStatusEnum.GraveYard;
                     }
 
-                    if (self.getOpposingPlayer().PlayerCards[self.getCurrentPlayerCards()[i].OpposingCardIndex].DEF <= 0) {
+                    if (self.getOpposingPlayer().PlayerCards[self.getCurrentPlayerCards()[i].OpposingCardIndex].getDEF() <= 0) {
                         self.getOpposingPlayer().PlayerCards[self.getCurrentPlayerCards()[i].OpposingCardIndex].Status = mmviewmodel.CardStatusEnum.GraveYard;
 
                         mmgamelogic.moveCardsToTheLeftAnimation(self.getOpposingPlayer().PlayerCards, mmgamelogic.calculateCardYValForPlayer(self.getOpposingPlayer().Id, mmviewmodel.CardStatusEnum.OnTable), mmviewmodel.CardStatusEnum.OnTable);

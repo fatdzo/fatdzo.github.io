@@ -75,6 +75,7 @@ function createCardDEF(x, y, def, color) {
     }
 }
 mmgamelogic.getStatColor = function (stat, basestat) {
+    console.log("Stat " + stat + ", BASE " + basestat);
     if (stat < basestat) {
         return color_card_stats_neg;
     }
@@ -90,8 +91,8 @@ mmgamelogic.updateDMGDEFText = function (resultCard) {
         stage.removeChild(resultCard.DMGText);
         stage.removeChild(resultCard.DEFText);
         
-        resultCard.DMGText = createCardDMG(resultCard.x, resultCard.y, resultCard.DMG, mmgamelogic.getStatColor(resultCard.DMG, resultCard.BaseDMG));
-        resultCard.DEFText = createCardDEF(resultCard.x, resultCard.y, resultCard.DEF, mmgamelogic.getStatColor(resultCard.DEF, resultCard.BaseDEF));
+        resultCard.DMGText = createCardDMG(resultCard.x, resultCard.y, resultCard.getDMG(), mmgamelogic.getStatColor(resultCard.getDMG(), resultCard.BaseDMG));
+        resultCard.DEFText = createCardDEF(resultCard.x, resultCard.y, resultCard.getDEF(), mmgamelogic.getStatColor(resultCard.getDEF(), resultCard.BaseDEF));
         stage.addChild(resultCard.DMGText);
         stage.addChild(resultCard.DEFText);
     }
@@ -115,13 +116,16 @@ function handleCompleteRemove(event) {
     stage.removeChild(event.Target);
 }
 
-function createCard(belongstoplayer, card_type, handIndex, cardIndex, x, y, orientationcoef, dmg, def, hidecards) {
+function createCard(currentPlayer, card_type, handIndex, cardIndex, x, y, orientationcoef, dmg, def, hidecards) {
     var resultCard = new mmviewmodel.CardViewModel();
-    resultCard.BelongsToPlayer = belongstoplayer;
+    resultCard.BelongsToPlayer = currentPlayer.Id;
+    console.log("Creating belongs to player" + currentPlayer.Id);
     resultCard.BaseDEF = def;
     resultCard.BaseDMG = dmg;
     resultCard.DEF = def;
+    resultCard.DEFMod = currentPlayer.DEX;
     resultCard.DMG = dmg;
+    resultCard.DMGMod = currentPlayer.STR;
     resultCard.Name = card_type;
     resultCard.TYPE = card_type;
     resultCard.x = x;
@@ -130,6 +134,14 @@ function createCard(belongstoplayer, card_type, handIndex, cardIndex, x, y, orie
     resultCard.Hide = hidecards;
     resultCard.HandIndex = handIndex;
     resultCard.CardIndex = cardIndex;
+
+    resultCard.getDMG = function () {
+        return resultCard.DMG + resultCard.DMGMod;
+    };
+
+    resultCard.getDEF = function () {
+        return resultCard.DEF + resultCard.DMGMod;
+    };
 
     console.log("Created: x->" + resultCard.x + "y->" + resultCard.y);
     var cardImage = getCardTypeImage(card_type);
@@ -140,8 +152,8 @@ function createCard(belongstoplayer, card_type, handIndex, cardIndex, x, y, orie
     resultCard.CardBitmap.x = resultCard.x;
     resultCard.CardBitmap.y = resultCard.y;
 
-    resultCard.DMGText = createCardDMG(resultCard.x, resultCard.y, resultCard.DMG, color_card_stats);
-    resultCard.DEFText = createCardDEF(resultCard.x, resultCard.y, resultCard.DEF, color_card_stats);
+    resultCard.DMGText = createCardDMG(resultCard.x, resultCard.y, resultCard.getDMG(), mmgamelogic.getStatColor(resultCard.getDMG(), resultCard.BaseDMG));
+    resultCard.DEFText = createCardDEF(resultCard.x, resultCard.y, resultCard.getDEF(), mmgamelogic.getStatColor(resultCard.getDEF(), resultCard.BaseDEF));
 
     resultCard.CardBitmap.addEventListener("click", function (event) {
         if (resultCard.Status == mmviewmodel.CardStatusEnum.OnTable) {
@@ -177,6 +189,7 @@ function createCard(belongstoplayer, card_type, handIndex, cardIndex, x, y, orie
 
     resultCard.CardBitmap.addEventListener("mouseover", function (event) {
         angular.element($('#mmgamecontroller')).scope().$apply(function ($scope) {
+            console.log("belongs to player" + resultCard.BelongsToPlayer);
             if (resultCard.Status == mmviewmodel.CardStatusEnum.InHand && $scope.Game.CurrentPlayer == resultCard.BelongsToPlayer) {
                 mmgamelogic.selectCardInHandAnimation(resultCard);
             }
@@ -221,8 +234,8 @@ mmgamelogic.updateCardBitmap = function (newcardImage, card) {
     card.CardBitmap.x = card.x;
     card.CardBitmap.y = card.y;
 
-    card.DMGText = createCardDMG(card.x, card.y, card.DMG, color_card_stats);
-    card.DEFText = createCardDEF(card.x, card.y, card.DEF, color_card_stats);
+    card.DMGText = createCardDMG(card.x, card.y, card.getDMG(), mmgamelogic.getStatColor(card.getDMG(), card.BaseDMG));
+    card.DEFText = createCardDEF(card.x, card.y, card.getDEF(), mmgamelogic.getStatColor(card.getDEF(), card.BaseDEF));
 };
 
 mmgamelogic.selectCardInHandAnimation = function (card) {
@@ -231,9 +244,9 @@ mmgamelogic.selectCardInHandAnimation = function (card) {
     createjs.Tween.get(card.CardBitmap, { loop: false })
         .to({ y: card.y - ydistance }, animtime, createjs.Ease.getPowInOut(4));
     createjs.Tween.get(card.DMGText, { loop: false })
-        .to({ y: calculateDMGTextY(card.y, card.DMG) - ydistance }, animtime, createjs.Ease.getPowInOut(4));
+        .to({ y: calculateDMGTextY(card.y, card.getDMG()) - ydistance }, animtime, createjs.Ease.getPowInOut(4));
     createjs.Tween.get(card.DEFText, { loop: false })
-        .to({ y: calculateDEFTextY(card.y, card.DMG) - ydistance }, animtime, createjs.Ease.getPowInOut(4));
+        .to({ y: calculateDEFTextY(card.y, card.getDEF()) - ydistance }, animtime, createjs.Ease.getPowInOut(4));
 };
 
 mmgamelogic.deselectCardInHandAnimation = function (card) {
@@ -241,9 +254,9 @@ mmgamelogic.deselectCardInHandAnimation = function (card) {
     createjs.Tween.get(card.CardBitmap, { loop: false })
         .to({ y: card.y }, animtime, createjs.Ease.getPowInOut(4));
     createjs.Tween.get(card.DMGText, { loop: false })
-        .to({ y: calculateDMGTextY(card.y, card.DMG) }, animtime, createjs.Ease.getPowInOut(4));
+        .to({ y: calculateDMGTextY(card.y, card.getDMG()) }, animtime, createjs.Ease.getPowInOut(4));
     createjs.Tween.get(card.DEFText, { loop: false })
-        .to({ y: calculateDEFTextY(card.y, card.DMG) }, animtime, createjs.Ease.getPowInOut(4));
+        .to({ y: calculateDEFTextY(card.y, card.getDEF()) }, animtime, createjs.Ease.getPowInOut(4));
 };
 
 mmgamelogic.moveCardsToTheLeftAnimation = function (playercards, yval, cardstatus) {
@@ -257,9 +270,9 @@ mmgamelogic.moveCardsToTheLeftAnimation = function (playercards, yval, cardstatu
             createjs.Tween.get(playercards[i].CardBitmap, { loop: false })
                   .to({ x: playercards[i].x }, animtime, createjs.Ease.getPowInOut(4));
             createjs.Tween.get(playercards[i].DMGText, { loop: false })
-                  .to({ x: calculateDMGTextX(playercards[i].x, playercards[i].DMG) }, animtime, createjs.Ease.getPowInOut(4));
+                  .to({ x: calculateDMGTextX(playercards[i].x, playercards[i].getDMG()) }, animtime, createjs.Ease.getPowInOut(4));
             createjs.Tween.get(playercards[i].DEFText, { loop: false })
-                  .to({ x: calculateDEFTextX(playercards[i].x, playercards[i].DEF) }, animtime, createjs.Ease.getPowInOut(4));
+                  .to({ x: calculateDEFTextX(playercards[i].x, playercards[i].getDEF()) }, animtime, createjs.Ease.getPowInOut(4));
 
             playercards[i].HandIndex = currentHandIndex;
             
@@ -295,9 +308,9 @@ mmgamelogic.putPlayerCardOnTableAnimation = function (playercards, selectedcard)
     createjs.Tween.get(playercards[selectedcard.CardIndex].CardBitmap, { loop: false })
           .to({ x: playercards[selectedcard.CardIndex].x, y: playercards[selectedcard.CardIndex].y }, animtime, createjs.Ease.getPowInOut(4));
     createjs.Tween.get(playercards[selectedcard.CardIndex].DMGText, { loop: false })
-          .to({ x: calculateDMGTextX(playercards[selectedcard.CardIndex].x, playercards[selectedcard.CardIndex].DMG), y: calculateDMGTextY(playercards[selectedcard.CardIndex].y, playercards[selectedcard.CardIndex].DMG) }, animtime, createjs.Ease.getPowInOut(4));
+          .to({ x: calculateDMGTextX(playercards[selectedcard.CardIndex].x, playercards[selectedcard.CardIndex].getDMG()), y: calculateDMGTextY(playercards[selectedcard.CardIndex].y, playercards[selectedcard.CardIndex].getDMG()) }, animtime, createjs.Ease.getPowInOut(4));
     createjs.Tween.get(playercards[selectedcard.CardIndex].DEFText, { loop: false })
-          .to({ x: calculateDEFTextX(playercards[selectedcard.CardIndex].x, playercards[selectedcard.CardIndex].DEF), y: calculateDEFTextY(playercards[selectedcard.CardIndex].y, playercards[selectedcard.CardIndex].DEF) }, animtime, createjs.Ease.getPowInOut(4));
+          .to({ x: calculateDEFTextX(playercards[selectedcard.CardIndex].x, playercards[selectedcard.CardIndex].getDEF()), y: calculateDEFTextY(playercards[selectedcard.CardIndex].y, playercards[selectedcard.CardIndex].getDEF()) }, animtime, createjs.Ease.getPowInOut(4));
 
     playercards[selectedcard.CardIndex].Status = mmviewmodel.CardStatusEnum.OnTable;
     playercards[selectedcard.CardIndex].TableIndex = tableIndex;
@@ -373,6 +386,7 @@ function getCardTypeImage(card_type) {
 }
 
 function createText(inputstring, x, y, size, color) {
+    console.log("Color->" + color);
     var text = new createjs.Text(inputstring, size + " " + "Arial", color);
     text.x = x;
     text.y = y;
@@ -388,20 +402,31 @@ function loadGame() {
     createjs.Ticker.addEventListener("tick", stage);
 }
 
-mmgamelogic.populateCards = function (belongstoplayer, numberOfCards, yval, hidecards, orientationcoef) {
+mmgamelogic.populateCards = function (currentplayer, numberOfCards, yval) {
     var resultCards = [];
     for (var i = 0; i < numberOfCards; i++) {
-        var temp = mmgamelogic.createRandomCard(belongstoplayer, i, i, yval, hidecards,orientationcoef);
+        var temp = mmgamelogic.createRandomCard(currentplayer, i, i, yval);
         resultCards.push(temp);
     }
     return resultCards;
 };
 
-mmgamelogic.createRandomCard = function (belongstoplayer, handindex, cardindex, yval, hidecards, orientationcoef) {
+mmgamelogic.createRandomCard = function (currentplayer, handindex, cardindex, yval) {
+
+    var orientationcoef = 1;
+    var belongsToPlayer = 1;
+    var hidecards = false;
+
+    if (currentplayer.Id == PLAYER_2) {
+        orientationcoef = -1;
+        belongsToPlayer = 2;
+        hidecards = true;
+    }
+
     var typecard = Math.floor(10 + (Math.random() * 4));
     var damage = Math.floor(Math.random() * 10 + 1);
     var defense = Math.floor(Math.random() * 10 + 1);
-    var temp = createCard(belongstoplayer, typecard, handindex, cardindex, canvas_padding_left + handindex * (canvas_width / max_num_of_cards_in_hand), yval, orientationcoef, damage, defense, hidecards);
+    var temp = createCard(currentplayer, typecard, handindex, cardindex, canvas_padding_left + handindex * (canvas_width / max_num_of_cards_in_hand), yval, orientationcoef, damage, defense, hidecards);
     temp.Status = mmviewmodel.CardStatusEnum.InHand;
     return temp;
 };
