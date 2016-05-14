@@ -33,6 +33,10 @@
                         <span>Level:</span>
                         <span ng-bind="Game.Player1.Level"></span>
                     </h3>
+                    <h3>
+                        <span>EXP:</span>
+                        <span ng-bind="Game.Player1.EXP"></span>
+                    </h3>
                     <label class="mmstatlabel">
                         <span>Skill points:</span>
                         <span ng-bind="Game.Player1.PointsToSpend"></span>
@@ -108,9 +112,6 @@
                 <button ng-disabled="Game.CanAttack()" ng-click="Game.attack()">
                     Attack
                 </button>
-                <button ng-disabled="Game.hasMaxCardsDrawn()" ng-click="Game.DrawCard()">
-                    DrawCard
-                </button>
                 <button ng-disabled="Game.GameInProgress==false" ng-click="Game.endTurn()">
                     End turn
                 </button>
@@ -137,8 +138,15 @@
                 </h2>
             </div>
         </div>
-        
         <div class="mmclear"></div>
+
+        <div>
+            <p>STR - strength, it increases the damage of your cards and affects fire resistance</p>
+            <p>DEX - dexterity, it increases the defense of your cards and affects water resistance</p>
+            <p>MAG - magic, it increases all your resistances. It gives a bonus to your wind resistance</p>
+            <p>CON - it increases the king's health and affects earth resistance</p>
+        </div>
+
         <div class="mmfooter">
             <h2>Technologies used: AngularJS, CreateJS</h2>
         </div> 
