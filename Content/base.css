@@ -45,6 +45,10 @@ p {
 a {
     color:#59acc3;
 }
+    a:hover {
+        color:#AAD5E1;
+        text-decoration:none;
+    }
 
 h1 {
     font-family: Impact, Haettenschweiler, 'Franklin Gothic Bold', Charcoal, 'Helvetica Inserat', 'Bitstream Vera Sans Bold', 'Arial Black', 'sans serif'!important;
