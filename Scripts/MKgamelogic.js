@@ -122,9 +122,9 @@ function createCard(currentPlayer, card_type, handIndex, cardIndex, x, y, orient
     console.log("Creating belongs to player" + currentPlayer.Id);
     resultCard.BaseDEF = def;
     resultCard.BaseDMG = dmg;
-    resultCard.DEF = def;
+    resultCard.DEF = def + currentPlayer.DEX;
     resultCard.DEFMod = currentPlayer.DEX;
-    resultCard.DMG = dmg;
+    resultCard.DMG = dmg + currentPlayer.STR;
     resultCard.DMGMod = currentPlayer.STR;
     resultCard.Name = card_type;
     resultCard.TYPE = card_type;
@@ -136,11 +136,11 @@ function createCard(currentPlayer, card_type, handIndex, cardIndex, x, y, orient
     resultCard.CardIndex = cardIndex;
 
     resultCard.getDMG = function () {
-        return resultCard.DMG + resultCard.DMGMod;
+        return resultCard.DMG;
     };
 
     resultCard.getDEF = function () {
-        return resultCard.DEF + resultCard.DMGMod;
+        return resultCard.DEF;
     };
 
     console.log("Created: x->" + resultCard.x + "y->" + resultCard.y);
