@@ -1,0 +1,67 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta content="text/html;charset=utf-8" http-equiv="Content-Type">
+    <meta content="utf-8" http-equiv="encoding">
+    <meta name="description" content="RecruiterBlock is a Chrome extension app that hides job ads from tech recruiting/staffing companies">
+    <meta name="keywords" content="MarkoMarksDevelopment, MarkoMarks, Development, Marko, Marks, Marko Markovic, Resume, Belgrade, Serbia, Orlando, Florida, Recruiter block, chrome, extension " />
+    <title>
+        Recruiter Block
+    </title>
+    <script type="text/javascript" src="Scripts/jquery-2.2.3.min.js"></script>
+    <link href="Content/bootstrap.min.css" rel="stylesheet" />
+    <link href="Content/base.css" rel="stylesheet" />
+    <link rel="icon" type="image/png" href="favicon.png">
+    <link rel="shortcut icon" type="image/x-icon" href="favicon.ico">
+
+    <meta name="viewport" content="user-scalable=no">
+
+    <script type="text/javascript" src="Scripts/bootstrap.min.js"></script>
+	<meta charset="utf-8" />
+</head>
+<body class="grad">
+    <div class="container">
+        <div class="col-lg-12">
+            <div class="mmappblockcontainer mmbottomcontainer">
+                <div class="mmappblock">
+                    <center>
+                        <h1 class="landingheadline">RecruiterBlock</h1>
+                        <h2 class="landingheadline">it hides those pesky job ads from tech recruiting/staffing companies</h2>
+                        <p>
+                            Finding a new tech job is getting harder these days because of the increasing number of recruiting companies. They spam the job boards making it hard to spot that dream job you always wanted. If you had bad experiences with recruiting companies, or you generally just don't like them this is the app for you. RecruiterBlock tries to weed out all the job ads from those annoying recruiting companies. For now, this Chrome extension app supports LinkedIn, Indeed, Glassdoor and Dice job boards. Additionally, this app has only been tested with florida's recruiting companies.
+                        </p>
+                        <p>
+                            Have a recruiting company to report? Send me an email at <a id="contact-email"></a> and I will add it asap. 
+                        </p>
+                        <p>
+                            This app is absolutely free to use. Only if you get a job and want to donate I would gladly accept it.
+                        </p>
+                        <br />
+                        <br />
+                        <br />
+                        <br />
+                        <br />
+                        <br />
+                        <br />
+                        <p class="mmcenter">"Orlando Skyline at night" image was done by <a target="_blank" href="http://www.skynoirphotography.com/">Bill Dickinson</a></p>
+                    </center>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script type="text/javascript" src="Scripts/mmglobalvariables.js"></script>
+    <script>
+        $(function () {
+            email = ko + ka + cemu + ende;
+
+            $('#contact-email').html(email);
+            $('#contact-email').click(function (event) {
+                window.open(
+                  'mailto:' + email,
+                  '_blank'
+                );
+            });
+        });
+    </script>
+</body>
+</html>
