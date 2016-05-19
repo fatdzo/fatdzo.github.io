@@ -200,7 +200,7 @@ li.mmli:before {
     }
     .mmcellfloat.third {
         padding-top:35px;
-        float:right;
+        float:left;
         text-align:right;
         width:25%;
     }
