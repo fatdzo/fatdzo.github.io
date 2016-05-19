@@ -186,19 +186,23 @@ li.mmli:before {
 .mmcellfloat {
     position:relative;
     float: left;
+    margin:0;
+    padding:0;
 }
 
     .mmcellfloat.first {
-        width:175px;
+        width:20%;
     }
     .mmcellfloat.second {
         padding-top:35px;
         height:150px;
+        width:50%;
     }
     .mmcellfloat.third {
         padding-top:35px;
         float:right;
         text-align:right;
+        width:25%;
     }
 
     .mmcellfloat.rightcell {
