@@ -191,26 +191,17 @@ li.mmli:before {
 }
 
     .mmcellfloat.first {
-        width:25%;
+        padding-right:30px;
         text-align:left;
     }
     .mmcellfloat.second {
-        padding-top:35px;
+        padding-top:20px;
         height:150px;
-        width:50%;
     }
     .mmcellfloat.third {
         padding-top:35px;
-        float:left;
+        float:right;
         text-align:right;
-        width:25%;
-    }
-
-    .mmcellfloat.rightcell {
-        padding-top:25px;
-        float:left;
-        text-align:right;
-        width:25%;
     }
 
 .mmclearfix {
