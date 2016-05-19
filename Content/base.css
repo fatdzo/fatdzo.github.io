@@ -201,6 +201,12 @@ li.mmli:before {
         text-align:right;
     }
 
+    .mmcellfloat.rightcell {
+        padding-top:25px;
+        float:right;
+        text-align:right;
+    }
+
 .mmclearfix {
     clear:both;
 }
